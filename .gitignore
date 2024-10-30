@@ -4,10 +4,17 @@
 
 ## User settings
 xcuserdata/
+<<<<<<< HEAD
 .DS_Store
 ## Obj-C/Swift specific
 *.hmap
 DerivedData/
+=======
+
+## Obj-C/Swift specific
+*.hmap
+
+>>>>>>> a36cdaa5bd816cadc1d6a0c2fb8b419a9f795e28
 ## App packaging
 *.ipa
 *.dSYM.zip
@@ -40,7 +47,11 @@ playground.xcworkspace
 # Pods/
 #
 # Add this line if you want to avoid checking in source code from the Xcode workspace
+<<<<<<< HEAD
 *.xcworkspace
+=======
+# *.xcworkspace
+>>>>>>> a36cdaa5bd816cadc1d6a0c2fb8b419a9f795e28
 
 # Carthage
 #
