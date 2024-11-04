@@ -15,6 +15,8 @@ class SpotifyAuth {
             -> create Application
             -> Under application you can find these fields.
      */
+    
+    // TODO: Add these clientId, clientSecret and tokenURL as environment variable instead of using constants.
     private let clientId = "6954911535bf4ded95f66f8cc0f72db6"
     private let clientSecret = "def5e9d9134f4f15900a02204162171c"
     private let tokenURL = "https://accounts.spotify.com/api/token"
@@ -23,7 +25,8 @@ class SpotifyAuth {
     func authenticate(completion: @escaping (Result<String, Error>) -> Void) {
         /**
             Function to authenticate user and setup the accessToken which is required to make API calls to spotify's platform.
-        */
+         - returns: accessToken is returned on completion.
+         */
         guard let url = URL(string: tokenURL) else { return }
 
         var request = URLRequest(url: url)
