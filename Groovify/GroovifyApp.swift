@@ -13,7 +13,8 @@ struct GroovifyApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+//            ContentView() // commented out for testing
+            InputScreen()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
