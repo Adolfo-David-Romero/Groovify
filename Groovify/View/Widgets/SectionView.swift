@@ -45,3 +45,7 @@ struct SectionView: View {
         }
     }
 }
+
+#Preview {
+    SectionView(title: "Top Charts", items: ["Song1", "Song2", "Song3", "Song4", "Song5"])
+}
