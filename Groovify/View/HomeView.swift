@@ -9,7 +9,19 @@ import SwiftUI
 
 struct HomeView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+            TopBarView()
+            ScrollView{
+                
+                ListView(title: "Your Recent Tracks", tracks: ["Song1", "Song2", "Song3", "Song4", "Song5"])
+                SectionView(title: "Top Charts", items: ["Song1", "Song2", "Song3", "Song4", "Song5"])
+                SectionView(title: "Recommended", items: ["Song1", "Song2", "Song3", "Song4", "Song5"])
+                SectionView(title: "New Releases", items: ["Song1", "Song2", "Song3", "Song4", "Song5"])
+                SectionView(title: "Genres", items: ["Pop", "Rock", "Hip-Hop", "Jazz", "Classical"])
+                
+            }
+            MiniPlayerView(track: "Song1")
+        }
     }
 }
 
