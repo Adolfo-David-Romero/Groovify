@@ -19,20 +19,16 @@ struct Playlist: Decodable, Identifiable {
     let collaborative: Bool
     let description: String
     let id: String
-    let images: [PlaylistImage]
+    let images: [SpotifyImage]
     let name: String
     let tracks: PlaylistTrackResults
     
 }
+extension Playlist: CarouselItem {}
+
 
 struct PlaylistTrackResults: Decodable {
     let href: String
     let total: Int
     
-}
-
-struct PlaylistImage: Decodable {
-    let url: String
-    let height: Int?
-    let width: Int?
 }

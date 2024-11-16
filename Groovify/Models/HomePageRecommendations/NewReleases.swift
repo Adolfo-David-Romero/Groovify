@@ -16,18 +16,18 @@ struct AlbumResults: Decodable {
     // More properties can be added here.
 }
 
+// Might need to improve names in future, album might be too vague .-.
 struct Album: Decodable, Identifiable {
     let album_type: String
     let id: String
     let name: String
-    let images: [AlbumImage]
+    let images: [SpotifyImage]
     let release_date: String
     let href: String
     // More properties can be added here later sirrr:)
 }
 
-struct AlbumImage: Decodable {
-    let url: String
-    let height: Int?
-    let width: Int?
-}
+extension Album: CarouselItem {}
+
+
+

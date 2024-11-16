@@ -10,9 +10,15 @@ import SwiftUI
 
 
 struct HomeView: View {
-    @State private var playlists: [Playlist] = []
     @State private var errorMessage: String?
+    
+    // For Featured Playlists
+    @State private var playlists: [Playlist] = []
     @State private var selectedPlaylist: Playlist?
+    
+    // For New Releases
+    @State private var newReleases: [Album] = []
+    @State private var selectedAlbum: Album?
     
     private var api = SpotifyAPI()
     var body: some View {
@@ -22,40 +28,8 @@ struct HomeView: View {
                 
                 ListView(title: "Your Recent Tracks", tracks: ["Song1", "Song2", "Song3", "Song4", "Song5"])
                 SectionView(title: "Top Charts", items: ["Song1", "Song2", "Song3", "Song4", "Song5"])
-                VStack(alignment: .leading) {
-                    Text("Featured Playlists")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .padding(.horizontal)
-                    
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        LazyHStack(spacing: 20) {
-                            ForEach(playlists) { playlist in
-                                VStack(alignment: .leading) {
-                                    if let imageUrl = playlist.images.first?.url {
-                                        AsyncImage(url: URL(string: imageUrl)) { image in
-                                            image
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fill)
-                                        } placeholder: {
-                                            Rectangle()
-                                                .foregroundColor(.gray)
-                                        }
-                                        .frame(width: 150, height: 150)
-                                        .cornerRadius(8)
-                                    }
-                                    
-                                    Text(playlist.name)
-                                        .font(.caption)
-                                        .lineLimit(2)
-                                        .frame(width: 150)
-                                }
-                            }
-                        }
-                        .padding(.horizontal)
-                    }
-                }
-                SectionView(title: "New Releases", items: ["Song1", "Song2", "Song3", "Song4", "Song5"])
+                PlaylistCarouselView(playlists: playlists, title: "Featured Playlists")
+                PlaylistCarouselView(playlists: newReleases, title: "New Releases")
                 SectionView(title: "Genres", items: ["Pop", "Rock", "Hip-Hop", "Jazz", "Classical"])
                 
             }
@@ -76,6 +50,17 @@ struct HomeView: View {
                             }
                         }
                     }
+                    api.getNewReleases { result in
+                        DispatchQueue.main.async {
+                            switch result {
+                            case .success(let newReleases):
+                                    self.newReleases = newReleases
+                            case .failure(let error):
+                                errorMessage = error.localizedDescription
+                            }
+                        }
+                    }
+                                    
                     
                 }
             }
