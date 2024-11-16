@@ -15,7 +15,7 @@ struct HomeView: View {
                 
                 ListView(title: "Your Recent Tracks", tracks: ["Song1", "Song2", "Song3", "Song4", "Song5"])
                 SectionView(title: "Top Charts", items: ["Song1", "Song2", "Song3", "Song4", "Song5"])
-                SectionView(title: "Recommended", items: ["Song1", "Song2", "Song3", "Song4", "Song5"])
+                SectionView(title: "Featured Playlists", items: ["Song1", "Song2", "Song3", "Song4", "Song5"])
                 SectionView(title: "New Releases", items: ["Song1", "Song2", "Song3", "Song4", "Song5"])
                 SectionView(title: "Genres", items: ["Pop", "Rock", "Hip-Hop", "Jazz", "Classical"])
                 

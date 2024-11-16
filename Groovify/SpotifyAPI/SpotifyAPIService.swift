@@ -43,6 +43,24 @@ class SpotifyAPI {
             completion(.success(data))
         }.resume()
     }
-
-    
+    func getFeaturedPlaylists(completion: @escaping (Result<[Playlist], Error>) -> Void) {
+        let endpoint = "/browse/featured-playlists"
+        
+        makeRequest(endpoint: endpoint) { result in
+            switch result {
+                case .success(let data):
+                    do {
+                        let json = try JSONDecoder().decode(FeaturedPlaylistsResponse.self, from: data)
+                        let playlists = json.playlists.items
+                        print(playlists)
+                        completion(.success(playlists))
+                    }
+                    catch {
+                        completion(.failure(error))
+                    }
+                case .failure(let error):
+                    completion(.failure(error))
+            }
+        }
+    }
 }
