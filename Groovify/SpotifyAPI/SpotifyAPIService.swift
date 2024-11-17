@@ -63,7 +63,7 @@ class SpotifyAPI {
             }
         }
     }
-    func getNewReleases(completion: @escaping (Result<[Album], Error>) -> Void) {
+    func getNewReleases(completion: @escaping (Result<[NewRelease], Error>) -> Void) {
         let endpoint = "/browse/new-releases"
         
         makeRequest(endpoint: endpoint){ result in

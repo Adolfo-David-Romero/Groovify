@@ -17,8 +17,8 @@ struct HomeView: View {
     @State private var selectedPlaylist: Playlist?
     
     // For New Releases
-    @State private var newReleases: [Album] = []
-    @State private var selectedAlbum: Album?
+    @State private var newReleases: [NewRelease] = []
+    @State private var selectedNewRelease: NewRelease?
     
     private var api = SpotifyAPI()
     var body: some View {

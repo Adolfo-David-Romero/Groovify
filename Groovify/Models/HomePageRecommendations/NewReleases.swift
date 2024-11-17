@@ -12,12 +12,12 @@ struct NewReleasesResponse: Decodable {
 }
 
 struct AlbumResults: Decodable {
-    let items: [Album]
+    let items: [NewRelease]
     // More properties can be added here.
 }
 
 // Might need to improve names in future, album might be too vague .-.
-struct Album: Decodable, Identifiable {
+struct NewRelease: Decodable, Identifiable {
     let album_type: String
     let id: String
     let name: String
@@ -27,7 +27,7 @@ struct Album: Decodable, Identifiable {
     // More properties can be added here later sirrr:)
 }
 
-extension Album: CarouselItem {}
+extension NewRelease: CarouselItem {}
 
 
 
