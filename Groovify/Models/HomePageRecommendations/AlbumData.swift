@@ -20,9 +20,9 @@ struct AlbumData: Decodable {
 struct Tracks: Decodable {
     let href: String
     let limit: Int
-    let next: String
+    let next: String? // Nullable field
     let offset: Int
-    let previous: String
+    let previous: String? // Nullable field
     let total: Int
     let items: [Track]
 }
@@ -31,8 +31,8 @@ struct Track: Decodable, Identifiable {
     let id: String
     let name: String
     let artists: [Artist]
-    let popularity: Int?
-    let preview_url: String?
+    let popularity: Int? // Nullable field
+    let preview_url: String? // Nullable field
 }
 
 struct Artist: Decodable {

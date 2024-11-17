@@ -30,7 +30,7 @@ class SpotifyAPI {
         guard let url = URL(string: "\(baseURL)\(endpoint)") else { return }
         var request = URLRequest(url: url)
         request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        
+        print("Making request to \(url)")
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 completion(.failure(error))
@@ -82,4 +82,25 @@ class SpotifyAPI {
             }
         }
     }
+    
+    func getAlbumData(endpoint: String, completion: @escaping (Result<AlbumData, Error>) -> Void) {
+        print("Getting album data for \(endpoint)")
+        makeRequest(endpoint: "/albums/4aawyAB9vmqN3uQ7FjRGTy") { result in
+            switch result {
+                case .success(let data):
+                    do {
+                        let albumData = try JSONDecoder().decode(AlbumData.self, from: data)
+                        print(albumData, "Album Data")
+                        print("Hello")
+                        completion(.success(albumData)) // Return album data on success.
+                    } catch {
+                        completion(.failure(error))}
+                case.failure(let error):
+                    print("Error")
+                    completion(.failure(error))
+            }
+        }
+    }
+    
 }
+                        

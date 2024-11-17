@@ -1,16 +1,10 @@
-//
-//  PlaylistCarouselView.swift
-//  Groovify
-//
-//  Created by Kunal Bajaj on 2024-11-16.
-//
-
 import SwiftUI
 
 struct PlaylistCarouselView<Item: CarouselItem>: View {
     
     var playlists: [Item]
     var title: String
+    var onItemClick: ((Item) -> Void)? // Callback for click events
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -41,10 +35,13 @@ struct PlaylistCarouselView<Item: CarouselItem>: View {
                                 .lineLimit(2)
                                 .frame(width: 150)
                         }
+                        .onTapGesture {
+                            onItemClick?(playlist) // Call the callback when tapped
+                        }
                     }
                 }
                 .padding(.horizontal)
             }
-        }    }
+        }
+    }
 }
-
