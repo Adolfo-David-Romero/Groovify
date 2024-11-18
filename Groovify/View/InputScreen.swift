@@ -9,6 +9,7 @@ import SwiftUI
 
 struct InputScreen: View {
     @State private var searchText = ""
+    @State private var selectedEmotions = Set<String>()
 
     var body: some View {
         NavigationStack {
@@ -27,11 +28,22 @@ struct InputScreen: View {
 
                 ScrollView {
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]) {
-                        ForEach(["Happy", "Nostalgic", "Calm", "Excited", "Romantic", "Sad", "Angry", "Anxious", "Lonely", "Grief", "Jealousy", "Regret"], id: \.self) { emotion in
-                            Button(action: {
-                                // Handle emotion selection (e.g., navigate to a different view)
+                            ForEach(["Happy", "Nostalgic", "Calm", "Excited", "Romantic", "Sad", "Angry", "Anxious", "Lonely", "Grief", "Jealousy", "Regret"], id: \.self) { emotion in
+                                Button(action: {
                                 print("Selected: \(emotion)")
-                            }) {
+                                    if selectedEmotions.contains(emotion) {
+                                           selectedEmotions.remove(emotion)
+                                       } else {
+                                           selectedEmotions.insert(emotion)
+                                       }
+                                    // Print the selected emotions
+                                    print("\nEmotion in Set:")
+                                        for emotion in selectedEmotions {
+                                            print(emotion)
+                                        }
+                                   })
+                                {//button content
+                                
                                 Text("#\(emotion)")
                                     .foregroundColor(.white)
                                     .padding(.vertical, 10)
@@ -44,6 +56,15 @@ struct InputScreen: View {
                     }
                     .padding(.horizontal)
                     .padding(.vertical)
+                }
+                NavigationLink(destination: OutputScreen(initialSearchText: searchText)) {
+                    Text("See Results")
+                        .foregroundColor(.white)
+                        .padding(.vertical, 10)
+                        .padding(.horizontal, 20)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                        .font(.system(size: 18))
                 }
             }
 //            .navigationTitle("Input Screen")
