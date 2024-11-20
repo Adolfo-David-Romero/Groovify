@@ -6,22 +6,39 @@
 //
 
 import SwiftUI
-//import Firebase
+import Firebase
 @main
 struct GroovifyApp: App {
     let persistenceController = PersistenceController.shared
-    /*@StateObject var viewModel = AuthViewModel()
+    @StateObject var viewModel = AuthViewModel()
     
     init(){
         FirebaseApp.configure()
     }
-     */
 
     var body: some Scene {
         WindowGroup {
-//            ContentView() // commented out for testing
-            InputScreen()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            NavigationStack{
+                RootView().environment(\.managedObjectContext, persistenceController.container.viewContext)
+            }
         }
     }
+}
+
+//MARK: - Root navigation
+struct RootView: View {
+    @EnvironmentObject var viewModel: AuthViewModel
+
+    var body: some View {
+            if viewModel.userSession != nil {
+                ContentView()
+
+            } else {
+                LoginView()
+            }
+        
+    }
+}
+#Preview {
+    RootView().environmentObject(AuthViewModel())
 }

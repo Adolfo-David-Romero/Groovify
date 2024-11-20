@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import Foundation
 
-/*
 struct LoginView: View {
     @State private var email = ""
     @State private var password = ""
-    //@EnvironmentObject var viewModel: AuthViewModel
+    @EnvironmentObject var viewModel: AuthViewModel
+    
     var body: some View {
         NavigationStack{
             VStack{
@@ -39,10 +40,10 @@ struct LoginView: View {
                         }.foregroundStyle(.white).frame(width: UIScreen.main.bounds.width - 32, height: 48)
                     }
                     .background(Color(.systemBlue))
-                    .disabled(formIsValid)
+                    .disabled(!formIsValid)
                     .opacity(formIsValid ? 1.0 : 0.5)
-                    .clipShape(.buttonBorder)
-                    .padding(.top, 24)
+                        .clipShape(.buttonBorder)
+                        .padding(.top, 24)
                     
                     Spacer()
                     
@@ -68,7 +69,7 @@ extension LoginView: AuthenticationFormProtocol{
         && password.count > 5
     }
 }
+
 #Preview {
-    LoginView()
+    LoginView().environmentObject(AuthViewModel())
 }
-*/

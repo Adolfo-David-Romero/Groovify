@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/*
+
 struct RegistrationView: View {
     @State private var email = ""
     @State private var fullName = ""
@@ -95,4 +95,4 @@ extension RegistrationView: AuthenticationFormProtocol{
 #Preview {
     RegistrationView()
 }
-*/
+
