@@ -20,6 +20,7 @@ struct GroovifyApp: App {
         WindowGroup {
             NavigationStack{
                 RootView().environment(\.managedObjectContext, persistenceController.container.viewContext)
+                    .environmentObject(viewModel)
             }
         }
     }
