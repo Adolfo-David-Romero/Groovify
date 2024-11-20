@@ -17,6 +17,11 @@ struct AlbumData: Decodable {
     let tracks: Tracks
     
 }
+
+/**
+ 
+ Always remember: If you dont make nullable fields optional, you will get an error
+ */
 struct Tracks: Decodable {
     let href: String
     let limit: Int
