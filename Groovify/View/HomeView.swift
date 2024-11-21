@@ -21,19 +21,24 @@ struct HomeView: View {
     @State private var newReleases: [NewRelease] = []
     @State private var selectedNewRelease: NewRelease?
     
+    @State private var selectedAlbumData: AlbumData?
+    
     private func loadAlbumData(for href: String) {
         print("Loading album data for \(href)")
-            api.getAlbumData(endpoint: "/albums/4aawyAB9vmqN3uQ7FjRGTy") { result in
+        if let range = href.range(of: "/v1/albums/") {
+            let endpoint = "/albums/" + href[range.upperBound...]
+            api.getAlbumData(endpoint: endpoint) { result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let data):
-                        print("Album Data: \(data)") // Replace with your desired
+                        self.selectedAlbumData = data
                     case .failure(let error):
                         errorMessage = error.localizedDescription
                     }
                 }
             }
         }
+    }
     
     private var api = SpotifyAPI()
     var body: some View {
@@ -50,6 +55,9 @@ struct HomeView: View {
                         loadAlbumData(for: newRelease.href)
                     }
                 })
+                .sheet(item: $selectedAlbumData) { albumData in
+                    AlbumView(albumData: albumData)
+                }
                 SectionView(title: "Genres", items: ["Pop", "Rock", "Hip-Hop", "Jazz", "Classical"])
                 
             }

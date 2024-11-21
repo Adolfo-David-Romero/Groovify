@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct AlbumData: Decodable {
+struct AlbumData: Decodable, Identifiable {
     let album_type: String
     let id: String
     let name: String

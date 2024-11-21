@@ -85,7 +85,7 @@ class SpotifyAPI {
     
     func getAlbumData(endpoint: String, completion: @escaping (Result<AlbumData, Error>) -> Void) {
         print("Getting album data for \(endpoint)")
-        makeRequest(endpoint: "/albums/4aawyAB9vmqN3uQ7FjRGTy") { result in
+        makeRequest(endpoint: endpoint) { result in
             switch result {
                 case .success(let data):
                     do {
