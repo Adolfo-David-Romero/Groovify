@@ -102,5 +102,25 @@ class SpotifyAPI {
         }
     }
     
+    func getPlaylistTracks(endpoint: String, completion: @escaping (Result<[PlaylistTrackObject], Error>) -> Void) {
+        print("Getting playlist tracks for \(endpoint)")
+        makeRequest(endpoint: endpoint) { result in
+            switch result {
+                case .success(let data):
+                    do {
+                        let playlistData = try JSONDecoder().decode(PlaylistTrackResponse.self, from: data).items
+                        print("Hello")
+                        completion(.success(playlistData)) // Return album data on success.
+                    } catch {
+                        completion(.failure(error))}
+                case.failure(let error):
+                    print("Error")
+                    completion(.failure(error))
+            }
+        }
+
+        
+    }
+    
 }
                         

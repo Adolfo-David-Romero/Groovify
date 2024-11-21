@@ -32,3 +32,99 @@ struct PlaylistTrackResults: Decodable {
     let total: Int
     
 }
+
+struct PlaylistTrackResponse: Decodable {
+    let items: [PlaylistTrackObject]
+}
+
+// MARK: - PlaylistTrackObject
+struct PlaylistTrackObject: Decodable {
+    let addedAt: String? // ISO 8601 date-time format
+    let addedBy: SpotifyUser?
+    let isLocal: Bool
+    let track: TrackOrEpisode
+}
+
+// MARK: - SpotifyUser
+struct SpotifyUser: Decodable {
+    let id: String
+    let href: String
+    let externalUrls: [String: String]
+}
+
+// MARK: - TrackOrEpisode (Polymorphic Type)
+enum TrackOrEpisode: Decodable {
+    case track(TrackObject)
+    case episode(EpisodeObject)
+
+    // Decode based on the presence of "type" field
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let type = try container.decode(String.self, forKey: .type)
+        switch type {
+        case "track":
+            self = .track(try TrackObject(from: decoder))
+        case "episode":
+            self = .episode(try EpisodeObject(from: decoder))
+        default:
+            throw DecodingError.dataCorruptedError(forKey: .type, in: container, debugDescription: "Invalid type value")
+        }
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case type
+    }
+}
+
+// MARK: - TrackObject
+struct TrackObject: Decodable {
+    let id: String
+    let name: String
+    let album: Album
+    let artists: [SimplifiedArtist]
+    let durationMs: Int
+    let explicit: Bool
+    let externalUrls: [String: String]
+    let href: String
+    let previewUrl: String?
+    let trackNumber: Int
+    let popularity: Int
+    let uri: String
+}
+
+// MARK: - EpisodeObject
+struct EpisodeObject: Decodable {
+    let id: String
+    let name: String
+    let description: String
+    let htmlDescription: String
+    let durationMs: Int
+    let explicit: Bool
+    let externalUrls: [String: String]
+    let href: String
+    let images: [SpotifyImage]
+    let isExternallyHosted: Bool
+    let isPlayable: Bool
+    let languages: [String]
+    let releaseDate: String
+    let releaseDatePrecision: String
+    let uri: String
+}
+
+// MARK: - Album
+struct Album: Decodable {
+    let id: String
+    let name: String
+    let href: String
+    let externalUrls: [String: String]
+    let images: [SpotifyImage]
+}
+
+// MARK: - SimplifiedArtist
+struct SimplifiedArtist: Decodable {
+    let id: String
+    let name: String
+    let href: String
+    let externalUrls: [String: String]
+}
+
