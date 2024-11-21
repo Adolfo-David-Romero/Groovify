@@ -54,7 +54,7 @@ struct SpotifyUser: Decodable {
 }
 
 // MARK: - TrackOrEpisode (Polymorphic Type)
-enum TrackOrEpisode: Decodable {
+enum TrackOrEpisode: Decodable{
     case track(TrackObject)
     case episode(EpisodeObject)
 
@@ -123,5 +123,16 @@ struct SimplifiedArtist: Decodable, Identifiable {
     let id: String
     let name: String
     let href: String
+}
+
+/**
+ Temporary wrapper to hold playlist and its tracks, I think we can just do this in PlaylistTrackResponse struct,
+ lets see.
+ */
+
+struct PlaylistTracksWrapper: Identifiable {
+    let id = UUID()
+    let playlist: Playlist
+    let tracks: [PlaylistTrackObject]
 }
 

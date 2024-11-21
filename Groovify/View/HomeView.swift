@@ -8,7 +8,6 @@
 import SwiftUI
 
 
-
 struct HomeView: View {
     @State private var errorMessage: String?
     
@@ -22,7 +21,7 @@ struct HomeView: View {
     @State private var selectedNewRelease: NewRelease?
     
     @State private var selectedAlbumData: AlbumData?
-    @State private var selectedPlaylistData: [PlaylistTrackObject]?
+    @State private var selectedPlaylistData: PlaylistTracksWrapper?
     
     private func loadAlbumData(for href: String) {
         print("Loading album data for \(href)")
@@ -40,15 +39,18 @@ struct HomeView: View {
             }
         }
     }
-    private func loadPlaylistTracks(for href: String) {
-        print("Loading album data for \(href)")
-        if let range = href.range(of: "/v1/playlists/") {
-            let endpoint = "/playlists/" + href[range.upperBound...] + "/tracks"
+    private func loadPlaylistTracks(for playlist: Playlist) {
+        print("Loading playlist tracks for \(playlist.href)")
+        if let range = playlist.href.range(of: "/v1/playlists/") {
+            let endpoint = "/playlists/" + playlist.href[range.upperBound...] + "/tracks"
             api.getPlaylistTracks(endpoint: endpoint) { result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let data):
-                            self.selectedPlaylistData = data
+                        self.selectedPlaylistData = PlaylistTracksWrapper(
+                            playlist: playlist,
+                            tracks: data
+                        )
                     case .failure(let error):
                         errorMessage = error.localizedDescription
                     }
@@ -67,8 +69,12 @@ struct HomeView: View {
                 SectionView(title: "Top Charts", items: ["Song1", "Song2", "Song3", "Song4", "Song5"])
                 PlaylistCarouselView(playlists: playlists, title: "Featured Playlists", onItemClick: { playlist in
                     if let playlist = playlist as? Playlist {
-                        selectedPlaylist = playlist
-                        loadPlaylistTracks(for: playlist.href)}})
+                        loadPlaylistTracks(for: playlist)
+                    }
+                })
+                .sheet(item: $selectedPlaylistData) { playlistTracks in
+                    PlaylistView(playlist: playlistTracks.playlist, tracks: playlistTracks.tracks)
+                }
                 PlaylistCarouselView(playlists: newReleases, title: "New Releases", onItemClick: { playlist in
                     if let newRelease = playlist as? NewRelease {
                         selectedAlbumHref = newRelease.href
