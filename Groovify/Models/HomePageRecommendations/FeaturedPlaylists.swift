@@ -16,6 +16,7 @@ struct PlaylistResults: Decodable {
 }
 
 struct Playlist: Decodable, Identifiable {
+    let href: String
     let collaborative: Bool
     let description: String
     let id: String
@@ -33,15 +34,15 @@ struct PlaylistTrackResults: Decodable {
     
 }
 
-struct PlaylistTrackResponse: Decodable {
+struct PlaylistTrackResponse: Decodable{
     let items: [PlaylistTrackObject]
 }
 
 // MARK: - PlaylistTrackObject
-struct PlaylistTrackObject: Decodable {
-    let addedAt: String? // ISO 8601 date-time format
-    let addedBy: SpotifyUser?
-    let isLocal: Bool
+struct PlaylistTrackObject: Decodable{
+    let added_at: String?
+    let added_by: SpotifyUser?
+    let is_local: Bool
     let track: TrackOrEpisode
 }
 
@@ -49,7 +50,7 @@ struct PlaylistTrackObject: Decodable {
 struct SpotifyUser: Decodable {
     let id: String
     let href: String
-    let externalUrls: [String: String]
+    let external_urls: [String: String]
 }
 
 // MARK: - TrackOrEpisode (Polymorphic Type)
@@ -77,30 +78,28 @@ enum TrackOrEpisode: Decodable {
 }
 
 // MARK: - TrackObject
-struct TrackObject: Decodable {
+struct TrackObject: Decodable, Identifiable {
     let id: String
     let name: String
     let album: Album
     let artists: [SimplifiedArtist]
-    let durationMs: Int
+    let duration_ms: Int
     let explicit: Bool
-    let externalUrls: [String: String]
     let href: String
-    let previewUrl: String?
-    let trackNumber: Int
+    let preview_url: String?
+    let track_number: Int
     let popularity: Int
     let uri: String
 }
 
 // MARK: - EpisodeObject
-struct EpisodeObject: Decodable {
+struct EpisodeObject: Decodable, Identifiable {
     let id: String
     let name: String
     let description: String
     let htmlDescription: String
-    let durationMs: Int
+    let duration_ms: Int
     let explicit: Bool
-    let externalUrls: [String: String]
     let href: String
     let images: [SpotifyImage]
     let isExternallyHosted: Bool
@@ -112,19 +111,17 @@ struct EpisodeObject: Decodable {
 }
 
 // MARK: - Album
-struct Album: Decodable {
+struct Album: Decodable, Identifiable {
     let id: String
     let name: String
     let href: String
-    let externalUrls: [String: String]
     let images: [SpotifyImage]
 }
 
 // MARK: - SimplifiedArtist
-struct SimplifiedArtist: Decodable {
+struct SimplifiedArtist: Decodable, Identifiable {
     let id: String
     let name: String
     let href: String
-    let externalUrls: [String: String]
 }
 
