@@ -54,7 +54,6 @@ class SpotifyAPI {
                     do {
                         let json = try JSONDecoder().decode(FeaturedPlaylistsResponse.self, from: data)
                         let playlists = json.playlists.items
-                        print(playlists)
                         completion(.success(playlists))
                     }
                     catch {
@@ -71,7 +70,6 @@ class SpotifyAPI {
         makeRequest(endpoint: endpoint){ result in
             switch result{
                 case.success(let data):
-                    print(data, "Data")
                     do{
                         let json = try JSONDecoder().decode(NewReleasesResponse.self, from: data)
                         let albums = json.albums.items
@@ -94,8 +92,6 @@ class SpotifyAPI {
                 case .success(let data):
                     do {
                         let albumData = try JSONDecoder().decode(AlbumData.self, from: data)
-                        print(albumData, "Album Data")
-                        print("Hello")
                         completion(.success(albumData)) // Return album data on success.
                     } catch {
                         completion(.failure(error))}
@@ -123,7 +119,6 @@ class SpotifyAPI {
                         
                         let playlistData = try JSONDecoder().decode(PlaylistTrackResponse.self, from: data).items
                         
-                        print("Playlist data: \(playlistData)")
                         completion(.success(playlistData))
                     }
                     /**
