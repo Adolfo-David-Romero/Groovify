@@ -13,11 +13,10 @@ struct AlbumData: Decodable, Identifiable {
     let name: String
     let images: [SpotifyImage]
     let total_tracks: Int
-    let artists: [Artist]
+    let artists: [SimplifiedArtist]
     let tracks: Tracks
     
 }
-
 /**
  
  Always remember: If you dont make nullable fields optional, you will get an error
@@ -32,14 +31,3 @@ struct Tracks: Decodable {
     let items: [Track]
 }
 
-struct Track: Decodable, Identifiable {
-    let id: String
-    let name: String
-    let artists: [Artist]
-    let popularity: Int? // Nullable field
-    let preview_url: String? // Nullable field
-}
-
-struct Artist: Decodable {
-    let name: String
-}

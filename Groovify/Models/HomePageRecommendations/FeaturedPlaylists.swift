@@ -55,7 +55,7 @@ struct SpotifyUser: Decodable {
 
 // MARK: - TrackOrEpisode (Polymorphic Type)
 enum TrackOrEpisode: Decodable{
-    case track(TrackObject)
+    case track(Track)
     case episode(EpisodeObject)
 
     // Decode based on the presence of "type" field
@@ -64,7 +64,7 @@ enum TrackOrEpisode: Decodable{
         let type = try container.decode(String.self, forKey: .type)
         switch type {
         case "track":
-            self = .track(try TrackObject(from: decoder))
+            self = .track(try Track(from: decoder))
         case "episode":
             self = .episode(try EpisodeObject(from: decoder))
         default:
@@ -78,19 +78,19 @@ enum TrackOrEpisode: Decodable{
 }
 
 // MARK: - TrackObject
-struct TrackObject: Decodable, Identifiable {
-    let id: String
-    let name: String
-    let album: Album
-    let artists: [SimplifiedArtist]
-    let duration_ms: Int
-    let explicit: Bool
-    let href: String
-    let preview_url: String?
-    let track_number: Int
-    let popularity: Int
-    let uri: String
-}
+//struct TrackObject: Decodable, Identifiable {
+//    let id: String
+//    let name: String
+//    let album: Album
+//    let artists: [SimplifiedArtist]
+//    let duration_ms: Int
+//    let explicit: Bool
+//    let href: String
+//    let preview_url: String?
+//    let track_number: Int
+//    let popularity: Int
+//    let uri: String
+//}
 
 // MARK: - EpisodeObject
 struct EpisodeObject: Decodable, Identifiable {
@@ -118,17 +118,14 @@ struct Album: Decodable, Identifiable {
     let images: [SpotifyImage]
 }
 
-// MARK: - SimplifiedArtist
-struct SimplifiedArtist: Decodable, Identifiable {
-    let id: String
-    let name: String
-    let href: String
-}
+
 
 /**
  Temporary wrapper to hold playlist and its tracks, I think we can just do this in PlaylistTrackResponse struct,
  lets see.
  */
+
+
 
 struct PlaylistTracksWrapper: Identifiable {
     let id = UUID()
@@ -136,3 +133,19 @@ struct PlaylistTracksWrapper: Identifiable {
     let tracks: PlaylistTrackResponse
 }
 
+
+
+
+
+
+
+//struct AlbumData: Decodable, Identifiable {
+//    let album_type: String
+//    let id: String
+//    let name: String
+//    let images: [SpotifyImage]
+//    let total_tracks: Int
+//    let artists: [Artist]
+//    let tracks: Tracks
+//    
+//}
