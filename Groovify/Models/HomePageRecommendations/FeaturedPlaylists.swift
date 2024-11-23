@@ -133,6 +133,6 @@ struct SimplifiedArtist: Decodable, Identifiable {
 struct PlaylistTracksWrapper: Identifiable {
     let id = UUID()
     let playlist: Playlist
-    let tracks: [PlaylistTrackObject]
+    let tracks: PlaylistTrackResponse
 }
 

@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct PlaylistView: View {
-    let playlist: Playlist
-    let tracks: [PlaylistTrackObject]
+    let playlists: PlaylistTracksWrapper
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 // Playlist Header
-                if let coverImage = playlist.images.first {
+                if let coverImage = playlists.playlist.images.first {
                     AsyncImage(url: URL(string: coverImage.url)) { image in
                         image
                             .resizable()
@@ -28,15 +27,15 @@ struct PlaylistView: View {
                 
                 // Playlist Info
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(playlist.name)
+                    Text(playlists.playlist.name)
                         .font(.title)
                         .bold()
                     
-                    Text(playlist.description)
+                    Text(playlists.playlist.description)
                         .font(.subheadline)
                         .foregroundColor(.gray)
                     
-                    Text("\(tracks.count) tracks")
+                    Text("\(playlists.tracks.items.count) tracks")
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }
@@ -49,7 +48,7 @@ struct PlaylistView: View {
                         .bold()
                         .padding(.horizontal)
                     
-                    ForEach(Array(tracks.enumerated()), id: \.offset) { index, playlistTrack in
+                    ForEach(Array(playlists.tracks.items.enumerated()), id: \.offset) { index, playlistTrack in
                         if case .track(let track) = playlistTrack.track {
                             HStack {
                                 Text("\(index + 1)")

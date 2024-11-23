@@ -73,7 +73,7 @@ struct HomeView: View {
                     }
                 })
                 .sheet(item: $selectedPlaylistData) { playlistTracks in
-                    PlaylistView(playlist: playlistTracks.playlist, tracks: playlistTracks.tracks)
+                    PlaylistView(playlists: playlistTracks)
                 }
                 PlaylistCarouselView(playlists: newReleases, title: "New Releases", onItemClick: { playlist in
                     if let newRelease = playlist as? NewRelease {

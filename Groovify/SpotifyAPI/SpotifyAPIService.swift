@@ -102,7 +102,7 @@ class SpotifyAPI {
         }
     }
     
-    func getPlaylistTracks(endpoint: String, completion: @escaping (Result<[PlaylistTrackObject], Error>) -> Void) {
+    func getPlaylistTracks(endpoint: String, completion: @escaping (Result<PlaylistTrackResponse, Error>) -> Void) {
         print("Getting playlist tracks for \(endpoint)")
         makeRequest(endpoint: endpoint) { result in
             switch result {
@@ -117,7 +117,7 @@ class SpotifyAPI {
 //                            print("Raw JSON response: \(jsonString)")
 //                        }
                         
-                        let playlistData = try JSONDecoder().decode(PlaylistTrackResponse.self, from: data).items
+                        let playlistData = try JSONDecoder().decode(PlaylistTrackResponse.self, from: data)
                         
                         completion(.success(playlistData))
                     }
