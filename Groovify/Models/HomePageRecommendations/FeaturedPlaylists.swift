@@ -34,6 +34,13 @@ struct PlaylistTrackResults: Decodable {
     
 }
 
+struct PlaylistTracksWrapper: Identifiable {
+    let id = UUID()
+    let playlist: Playlist
+    let tracks: PlaylistTrackResponse
+}
+
+
 struct PlaylistTrackResponse: Decodable{
     let items: [PlaylistTrackObject]
 }
@@ -77,21 +84,6 @@ enum TrackOrEpisode: Decodable{
     }
 }
 
-// MARK: - TrackObject
-//struct TrackObject: Decodable, Identifiable {
-//    let id: String
-//    let name: String
-//    let album: Album
-//    let artists: [SimplifiedArtist]
-//    let duration_ms: Int
-//    let explicit: Bool
-//    let href: String
-//    let preview_url: String?
-//    let track_number: Int
-//    let popularity: Int
-//    let uri: String
-//}
-
 // MARK: - EpisodeObject
 struct EpisodeObject: Decodable, Identifiable {
     let id: String
@@ -126,12 +118,6 @@ struct Album: Decodable, Identifiable {
  */
 
 
-
-struct PlaylistTracksWrapper: Identifiable {
-    let id = UUID()
-    let playlist: Playlist
-    let tracks: PlaylistTrackResponse
-}
 
 
 

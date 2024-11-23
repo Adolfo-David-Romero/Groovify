@@ -40,3 +40,48 @@ struct SpotifyImage: Decodable {
     let height: Int?
     let width: Int?
 }
+
+protocol TrackDisplayable: Identifiable {
+    var name: String { get }
+    var artistNames: String { get }
+    var previewURL: URL? { get }
+}
+
+extension Track: TrackDisplayable {
+    var artistNames: String {
+        artists.map { $0.name }.joined(separator: ", ")
+    }
+    var previewURL: URL? {
+        URL(string: preview_url ?? "")
+    }
+}
+
+extension TrackOrEpisode: TrackDisplayable {
+    var id: String {
+        switch self {
+        case .track(let track): return track.id
+        case .episode(let episode): return episode.id
+        }
+    }
+
+    var name: String {
+        switch self {
+        case .track(let track): return track.name
+        case .episode(let episode): return episode.name
+        }
+    }
+
+    var artistNames: String {
+        switch self {
+        case .track(let track): return track.artists.map { $0.name }.joined(separator: ", ")
+        case .episode: return "Episode"
+        }
+    }
+
+    var previewURL: URL? {
+        switch self {
+        case .track(let track): return URL(string: track.preview_url ?? "")
+        case .episode: return nil
+        }
+    }
+}

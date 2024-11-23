@@ -13,7 +13,6 @@ struct PlaylistView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                // Playlist Header
                 if let coverImage = playlists.playlist.images.first {
                     AsyncImage(url: URL(string: coverImage.url)) { image in
                         image
@@ -25,7 +24,6 @@ struct PlaylistView: View {
                     }
                 }
                 
-                // Playlist Info
                 VStack(alignment: .leading, spacing: 8) {
                     Text(playlists.playlist.name)
                         .font(.title)
@@ -41,39 +39,14 @@ struct PlaylistView: View {
                 }
                 .padding(.horizontal)
                 
-                // Tracks List
-                VStack(alignment: .leading, spacing: 16) {
-                    Text("Tracks")
-                        .font(.title2)
-                        .bold()
-                        .padding(.horizontal)
-                    
-                    ForEach(Array(playlists.tracks.items.enumerated()), id: \.offset) { index, playlistTrack in
-                        if case .track(let track) = playlistTrack.track {
-                            HStack {
-                                Text("\(index + 1)")
-                                    .foregroundColor(.gray)
-                                    .frame(width: 30)
-                                
-                                VStack(alignment: .leading) {
-                                    Text(track.name)
-                                        .font(.body)
-                                    Text(track.artists.map { $0.name }.joined(separator: ", "))
-                                        .font(.caption)
-                                        .foregroundColor(.gray)
-                                }
-                                Spacer()
-                                if let _ = track.preview_url {
-                                    Image(systemName: "play.circle")
-                                        .font(.title2)
-                                }
-                            }
-                            .padding(.horizontal)
-                            Divider()
-                        }
+                let trackItems = playlists.tracks.items.compactMap { playlistTrack -> Track? in
+                    if case .track(let track) = playlistTrack.track {
+                        return track
                     }
+                    return nil
                 }
+                TrackListView(tracks: trackItems)
             }
         }
     }
-} 
+}

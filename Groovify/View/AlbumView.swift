@@ -13,7 +13,6 @@ struct AlbumView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                // Album Header
                 if let coverImage = albumData.images.first {
                     AsyncImage(url: URL(string: coverImage.url)) { image in
                         image
@@ -25,7 +24,6 @@ struct AlbumView: View {
                     }
                 }
                 
-                // Album Info
                 VStack(alignment: .leading, spacing: 8) {
                     Text(albumData.name)
                         .font(.title)
@@ -41,33 +39,7 @@ struct AlbumView: View {
                 }
                 .padding(.horizontal)
                 
-                // Tracks List
-                VStack(alignment: .leading, spacing: 16) {
-                    Text("Tracks")
-                        .font(.title2)
-                        .bold()
-                        .padding(.horizontal)
-                    
-                    ForEach(albumData.tracks.items) { track in
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text(track.name)
-                                    .font(.body)
-                                Text(track.artists.map { $0.name }.joined(separator: ", "))
-                                    .font(.caption)
-                                    .foregroundColor(.gray)
-                            }
-                            Spacer()
-                            if let previewUrl = track.preview_url {
-                                // Add play button or preview functionality here
-                                Image(systemName: "play.circle")
-                                    .font(.title2)
-                            }
-                        }
-                        .padding(.horizontal)
-                        Divider()
-                    }
-                }
+                TrackListView(tracks: albumData.tracks.items)
             }
         }
     }
