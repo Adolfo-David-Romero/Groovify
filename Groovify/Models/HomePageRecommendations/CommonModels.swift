@@ -29,6 +29,7 @@ struct SimplifiedArtist: Decodable, Identifiable {
 struct Track: Decodable, Identifiable {
     let id: String
     let name: String
+    let album: Album?
     let artists: [SimplifiedArtist]
     let popularity: Int? // Nullable field
     let preview_url: String? // Nullable field
@@ -45,6 +46,7 @@ protocol TrackDisplayable: Identifiable {
     var name: String { get }
     var artistNames: String { get }
     var previewURL: URL? { get }
+    var album: Album? { get }
 }
 
 extension Track: TrackDisplayable {
@@ -82,6 +84,12 @@ extension TrackOrEpisode: TrackDisplayable {
         switch self {
         case .track(let track): return URL(string: track.preview_url ?? "")
         case .episode: return nil
+        }
+    }
+    var album: Album? {
+        switch self {
+            case .track(let track): return track.album
+            case .episode: return nil
         }
     }
 }

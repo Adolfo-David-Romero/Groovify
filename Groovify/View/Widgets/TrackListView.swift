@@ -7,9 +7,25 @@ struct TrackListView<T: TrackDisplayable>: View {
         VStack(alignment: .leading, spacing: 16) {
             ForEach(Array(tracks.enumerated()), id: \.element.id) { index, track in
                 HStack {
-                    Text("\(index + 1).")
-                        .foregroundColor(.gray)
-                        .frame(width: 30)
+                    if let albumImageURL = track.album?.images.first?.url {
+                                            AsyncImage(url: URL(string: albumImageURL)) { image in
+                                                image
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 50, height: 50)
+                                                    .cornerRadius(8)
+                                            } placeholder: {
+                                                ProgressView()
+                                                    .frame(width: 50, height: 50)
+                                            }
+                                        } else {
+                                            Text("\(index + 1).")
+                                                .foregroundColor(.gray)
+                                                .frame(width: 50, height: 50)
+                                                .background(Color.gray.opacity(0.3))
+                                                .cornerRadius(8)
+                                                .multilineTextAlignment(.center)
+                                        }
 
                     VStack(alignment: .leading) {
                         Text(track.name)
