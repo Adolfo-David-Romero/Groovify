@@ -7,16 +7,20 @@
 
 import Foundation
 
+// For GetNewReleases Endpoint.
+
+// MARK: - NewReleasesResponse
 struct NewReleasesResponse: Decodable {
     let albums: AlbumResults
 }
 
+// MARK: - AlbumResults
 struct AlbumResults: Decodable {
     let items: [NewRelease]
     // More properties can be added here.
 }
 
-// Might need to improve names in future, album might be too vague .-.
+// MARK: - NewRelease
 struct NewRelease: Decodable, Identifiable {
     let album_type: String
     let id: String
@@ -26,7 +30,7 @@ struct NewRelease: Decodable, Identifiable {
     let href: String
     // More properties can be added here later sirrr:)
 }
-
+// Conforming to CarouselItem protocol
 extension NewRelease: CarouselItem {}
 
 

@@ -23,7 +23,10 @@ struct HomeView: View {
     
     @State private var selectedAlbumData: AlbumData?
     @State private var selectedPlaylistData: PlaylistTracksWrapper?
+    private var api = SpotifyAPI()
+
     
+    // MARK: - Functions
     private func loadAlbumData(for href: String) {
         print("Loading album data for \(href)")
         if let range = href.range(of: "/v1/albums/") {
@@ -61,23 +64,38 @@ struct HomeView: View {
         }
     }
     
-    private var api = SpotifyAPI()
+    // MARK: - Body
     var body: some View {
+        /**
+         Changed sheet to navigation, as the sheet was not working as expected.
+         Main issue was sheet was not able to navigate to TrackDetailsView, properly.
+         */
         NavigationStack{
             VStack{
                 TopBarView()
                 ScrollView{
                     
+                    /**
+                     Placeholders for other components of the HomeView.
+                     We can replace these with actual components later.
+                     Might be a good idea to create separate views for each component.
+                     
+                     */
                     ListView(title: "Your Recent Tracks", tracks: ["Song1", "Song2", "Song3", "Song4", "Song5"])
                     SectionView(title: "Top Charts", items: ["Song1", "Song2", "Song3", "Song4", "Song5"])
+                    
+                    // Featured Playlists, this is a bit complex but reduces redundancy by a lot.
+                    // It loads the playlist tracks on click. If we can implement a cache, it can be more efficient.
                     PlaylistCarouselView(playlists: playlists, title: "Featured Playlists", onItemClick: { playlist in
                         if let playlist = playlist as? Playlist {
                             loadPlaylistTracks(for: playlist)
                         }
                     })
+                     // navigationDestination is a custom modifier to navigate to PlaylistView, it needs **Hashable** data.
                                     .navigationDestination(item: $selectedPlaylistData) { playlistTracks in
                                         PlaylistView(playlists: playlistTracks)
                                     }
+                    // Same for New Releases
                     PlaylistCarouselView(playlists: newReleases, title: "New Releases", onItemClick: { playlist in
                         if let newRelease = playlist as? NewRelease {
                             selectedAlbumHref = newRelease.href
@@ -87,11 +105,16 @@ struct HomeView: View {
                     .navigationDestination(item: $selectedAlbumData) { albumData in
                         AlbumView(albumData: albumData)
                     }
+                    
+                    // Placeholders for other components of the HomeView.
                     SectionView(title: "Genres", items: ["Pop", "Rock", "Hip-Hop", "Jazz", "Classical"])
                     
                 }
+                // MiniPlayerView for music player.
                 MiniPlayerView()
             }
+            // Calling API calls for Featured Playlists and New Releases.
+            // If user is not authenticated, it will show an error message.
             .onAppear {
                 api.auth.authenticate { result in
                     if case .failure(let error) = result {

@@ -7,17 +7,12 @@
 
 import Foundation
 
+// MARK: - CarouselItem (Protocol to display carousel items)
 protocol CarouselItem: Identifiable {
     var name: String { get }
     var images: [SpotifyImage] { get }
 }
 
-protocol TrackViewObject{
-    var name: String { get }
-    var artists: [SimplifiedArtist] { get }
-    var preview_url: String? { get }
-    
-}
 
 // MARK: - SimplifiedArtist
 struct SimplifiedArtist: Decodable, Identifiable {
@@ -26,6 +21,7 @@ struct SimplifiedArtist: Decodable, Identifiable {
     let href: String
 }
 
+// MARK: - Track
 struct Track: Decodable, Identifiable {
     let id: String
     let name: String
@@ -35,13 +31,14 @@ struct Track: Decodable, Identifiable {
     let preview_url: String? // Nullable field
 }
 
-
+// MARK: - SpotifyImage
 struct SpotifyImage: Decodable {
     let url: String
     let height: Int?
     let width: Int?
 }
 
+// MARK: - TrackDisplayable (Protocol to display track data)
 protocol TrackDisplayable: Identifiable {
     var name: String { get }
     var artistNames: String { get }
@@ -49,6 +46,7 @@ protocol TrackDisplayable: Identifiable {
     var album: Album? { get }
 }
 
+// Extension to conform Track to TrackDisplayable
 extension Track: TrackDisplayable {
     var artistNames: String {
         artists.map { $0.name }.joined(separator: ", ")
@@ -58,6 +56,7 @@ extension Track: TrackDisplayable {
     }
 }
 
+// Extension to conform TrackOrEpisode to TrackDisplayable
 extension TrackOrEpisode: TrackDisplayable {
     var id: String {
         switch self {

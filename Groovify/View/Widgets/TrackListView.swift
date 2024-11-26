@@ -1,9 +1,25 @@
 import SwiftUI
+
+// MARK: - TrackListView (Reusable Component)
 struct TrackListView<T: TrackDisplayable>: View {
+    
+    /**
+        A view that displays a list of tracks. It takes an array of items conforming to `TrackDisplayable` protocol.
+        The view displays the track name, artist names, and a play button if a preview URL is available.
+     */
+    
+    // MARK: - Properties
+    /*
+        tracks: The array of items to display in the list.
+        selectedTrack: The selected track to display in the detail view sheet.
+     */
     let tracks: [T]
     @State private var selectedTrack: T? = nil // Track for the sheet
     
+    // MARK: - Body
     var body: some View {
+        
+        // Simple list view for displaying tracks
         VStack(alignment: .leading, spacing: 16) {
             ForEach(Array(tracks.enumerated()), id: \.element.id) { index, track in
                 HStack {
@@ -41,6 +57,7 @@ struct TrackListView<T: TrackDisplayable>: View {
                     }
                 }
                 .padding(.horizontal)
+                // Show the detail view when tapped for each track
                 .onTapGesture {
                     // Set the selected track and present the detail view
                     selectedTrack = track
@@ -48,8 +65,8 @@ struct TrackListView<T: TrackDisplayable>: View {
                 Divider()
             }
         }
+        // Present the detail view as a sheet
         .sheet(item: $selectedTrack) { track in
-            // Present TrackDetailView when a track is selected
             TrackDetailView(track: track)
         }
     }

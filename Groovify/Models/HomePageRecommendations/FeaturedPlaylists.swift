@@ -7,14 +7,19 @@
 
 import Foundation
 
+// For GetFeaturedPlaylists Endpoint.
+
+// MARK: - FeaturedPlaylistsResponse
 struct FeaturedPlaylistsResponse: Decodable {
     let playlists: PlaylistResults
 }
 
+// MARK: - PlaylistResults
 struct PlaylistResults: Decodable {
     let items: [Playlist]
 }
 
+// MARK: - Playlist
 struct Playlist: Decodable, Identifiable {
     let href: String
     let collaborative: Bool
@@ -25,20 +30,26 @@ struct Playlist: Decodable, Identifiable {
     let tracks: PlaylistTrackResults
     
 }
+// Conforming to CarouselItem protocol
 extension Playlist: CarouselItem {}
 
-
+// MARK: - PlaylistTrackResults
 struct PlaylistTrackResults: Decodable {
     let href: String
     let total: Int
     
 }
 
+
+
+// Complex Models for Playlist Tracks, even I get confused sometimes.
+// MARK: - PlaylistTracksWrapper
 struct PlaylistTracksWrapper: Identifiable, Hashable {
     let id = UUID()
     let playlist: Playlist
     let tracks: PlaylistTrackResponse
     
+    // Hashable and Equatable conformance
     func hash(into hasher: inout Hasher) {
             hasher.combine(id)
         }
@@ -48,7 +59,7 @@ struct PlaylistTracksWrapper: Identifiable, Hashable {
         }
 }
 
-
+// MARK: - PlaylistTrackResponse
 struct PlaylistTrackResponse: Decodable{
     let items: [PlaylistTrackObject]
 }
@@ -92,21 +103,6 @@ enum TrackOrEpisode: Decodable{
     }
 }
 
-// MARK: - TrackObject
-//struct TrackObject: Decodable, Identifiable {
-//    let id: String
-//    let name: String
-//    let album: Album
-//    let artists: [SimplifiedArtist]
-//    let duration_ms: Int
-//    let explicit: Bool
-//    let href: String
-//    let preview_url: String?
-//    let track_number: Int
-//    let popularity: Int
-//    let uri: String
-//}
-
 // MARK: - EpisodeObject
 struct EpisodeObject: Decodable, Identifiable {
     let id: String
@@ -132,29 +128,3 @@ struct Album: Decodable, Identifiable {
     let href: String
     let images: [SpotifyImage]
 }
-
-
-
-/**
- Temporary wrapper to hold playlist and its tracks, I think we can just do this in PlaylistTrackResponse struct,
- lets see.
- */
-
-
-
-
-
-
-
-
-
-//struct AlbumData: Decodable, Identifiable {
-//    let album_type: String
-//    let id: String
-//    let name: String
-//    let images: [SpotifyImage]
-//    let total_tracks: Int
-//    let artists: [Artist]
-//    let tracks: Tracks
-//    
-//}

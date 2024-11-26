@@ -7,6 +7,8 @@
 
 import Foundation
 
+// For GetAlbum Endpoint.
+// MARK: - AlbumData
 struct AlbumData: Decodable, Identifiable, Hashable {
     let album_type: String
     let id: String
@@ -16,6 +18,7 @@ struct AlbumData: Decodable, Identifiable, Hashable {
     let artists: [SimplifiedArtist]
     let tracks: Tracks
     
+    // Hashable and Equatable conformance for navigation
     func hash(into hasher: inout Hasher) {
             hasher.combine(id)
         }
@@ -26,9 +29,11 @@ struct AlbumData: Decodable, Identifiable, Hashable {
     
 }
 /**
- 
- Always remember: If you dont make nullable fields optional, you will get an error
+ Golden Lines took 2 hrs of debugging:
+ "Always remember: If you dont make nullable fields optional, you will get an error"
  */
+
+// MARK: - Album
 struct Tracks: Decodable {
     let href: String
     let limit: Int

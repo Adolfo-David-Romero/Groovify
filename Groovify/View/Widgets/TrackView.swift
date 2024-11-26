@@ -2,10 +2,19 @@ import SwiftUI
 import AVKit
 
 struct TrackDetailView: View {
+    
+    // MARK: - Properties
+    /*
+        track: The track to display in the view.
+        player: The AVPlayer instance for playing the track preview. (Needs to be global in future.)
+        isPlaying: A boolean to track if the track is currently playing.
+     */
     var track: any TrackDisplayable
     @State private var player: AVPlayer?
     @State private var isPlaying = false
     
+    
+    // MARK: - Body
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             // Album Image

@@ -9,10 +9,16 @@ import SwiftUI
 import Combine
 
 struct MiniPlayerView: View {
+    
+    /**
+        EnvironmentObject property wrapper is used to inject the MusicPlayerManager instance into the view.
+     */
     @EnvironmentObject var playerManager: MusicPlayerManager
     
     var body: some View {
         if let track = playerManager.currentTrack {
+            
+            
             HStack {
                 // Track Image or Icon
                 if let imageURL = track.album?.images.first?.url,
@@ -35,6 +41,8 @@ struct MiniPlayerView: View {
                                 .foregroundColor(.white)
                         }
                     }
+                // It will display a default music icon if no image is available.
+                // Ideally it is cases where song is from single album, so we need to display album image.
                 } else {
                     Image(systemName: "music.note")
                         .font(.title)
@@ -60,6 +68,7 @@ struct MiniPlayerView: View {
                             .foregroundColor(.white)
                     }
                     
+                    // Play/Pause Button
                     Button(action: {
                         playerManager.isPlaying
                             ? playerManager.pause()
@@ -81,6 +90,7 @@ struct MiniPlayerView: View {
             .background(Color(red: 10.0/255.0, green: 14.0/255.0, blue: 69.0/255.0))
             .cornerRadius(20)
             .transition(.move(edge: .bottom))
+            // Custom animation for mini player view, but commented out for now, as requires Equatable implementation for Track.
 //            .animation(.default, value: playerManager.currentTrack)
         }
     }

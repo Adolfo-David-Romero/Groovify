@@ -1,12 +1,27 @@
 import SwiftUI
 
+// MARK: - PlaylistCarouselView (Reusable Component)
 struct PlaylistCarouselView<Item: CarouselItem>: View {
     
+    /**
+        A view that displays a horizontal carousel of playlists. It takes an array of items conforming to `CarouselItem` protocol.
+        The view displays the title and a horizontal scrollable list of items.
+     
+     */
+    // MARK: - Properties
+    /*
+        playlists: The array of items to display in the carousel.
+        title: The title of the carousel.
+        onItemClick: A closure that is called when an item is clicked
+     */
     var playlists: [Item]
     var title: String
     var onItemClick: ((Item) -> Void)? // Callback for click events
     
+    // MARK: - Body
     var body: some View {
+        
+        // UI for the PlaylistCarouselView
         VStack(alignment: .leading) {
             Text(title)
                 .font(.title2)
@@ -35,6 +50,7 @@ struct PlaylistCarouselView<Item: CarouselItem>: View {
                                 .lineLimit(2)
                                 .frame(width: 150)
                         }
+                        // Call the onItemClick closure when tapped
                         .onTapGesture {
                             onItemClick?(playlist) // Call the callback when tapped
                         }

@@ -8,10 +8,18 @@
 import Foundation
 import AVKit
 
+// MARK: - MusicPlayerManager (Class to manage music player)
 class MusicPlayerManager: ObservableObject{
     
+    // Singleton instance
     static let shared = MusicPlayerManager()
     
+    //MARK: - Properties
+    /*
+        currentTrack: The track that is currently being played
+        isPlaying: A boolean value to indicate whether the track is currently playing
+        player: An instance of AVPlayer to play the track
+     */
     @Published var currentTrack: (any TrackDisplayable)? = nil
     @Published var isPlaying: Bool = false
     @Published private var player: AVPlayer?
@@ -19,7 +27,7 @@ class MusicPlayerManager: ObservableObject{
     
     private init() {}
     
-    
+    //MARK: - Methods
     func play(track: any TrackDisplayable) {
             currentTrack = track
             isPlaying = true
