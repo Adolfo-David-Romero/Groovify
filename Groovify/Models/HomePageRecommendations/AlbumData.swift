@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct AlbumData: Decodable, Identifiable {
+struct AlbumData: Decodable, Identifiable, Hashable {
     let album_type: String
     let id: String
     let name: String
@@ -15,6 +15,14 @@ struct AlbumData: Decodable, Identifiable {
     let total_tracks: Int
     let artists: [SimplifiedArtist]
     let tracks: Tracks
+    
+    func hash(into hasher: inout Hasher) {
+            hasher.combine(id)
+        }
+        
+        static func == (lhs: AlbumData, rhs: AlbumData) -> Bool {
+            return lhs.id == rhs.id
+        }
     
 }
 /**

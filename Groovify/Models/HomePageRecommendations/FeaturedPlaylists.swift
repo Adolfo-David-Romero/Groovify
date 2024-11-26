@@ -34,10 +34,18 @@ struct PlaylistTrackResults: Decodable {
     
 }
 
-struct PlaylistTracksWrapper: Identifiable {
+struct PlaylistTracksWrapper: Identifiable, Hashable {
     let id = UUID()
     let playlist: Playlist
     let tracks: PlaylistTrackResponse
+    
+    func hash(into hasher: inout Hasher) {
+            hasher.combine(id)
+        }
+        
+    static func == (lhs: PlaylistTracksWrapper, rhs: PlaylistTracksWrapper) -> Bool {
+            return lhs.id == rhs.id
+        }
 }
 
 
