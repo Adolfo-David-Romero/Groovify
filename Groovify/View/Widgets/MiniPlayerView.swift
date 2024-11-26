@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 struct MiniPlayerView: View {
-    @StateObject private var playerManager = MusicPlayerManager.shared
+    @EnvironmentObject var playerManager: MusicPlayerManager
     
     var body: some View {
         if let track = playerManager.currentTrack {
