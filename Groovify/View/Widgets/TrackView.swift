@@ -1,20 +1,14 @@
-//
-//  TrackView.swift
-//  Groovify
-//
-//  Created by Kunal Bajaj on 2024-11-23.
-//
-
-
 import SwiftUI
 import AVKit
+
 struct TrackDetailView: View {
     var track: any TrackDisplayable
     @State private var player: AVPlayer?
-    @State private var isPlaying = false // Track playback state
-
+    @State private var isPlaying = false
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
+            // Album Image
             if let albumImageUrl = track.album?.images.first?.url,
                let url = URL(string: albumImageUrl) {
                 AsyncImage(url: url) { image in
@@ -26,53 +20,53 @@ struct TrackDetailView: View {
                     ProgressView()
                 }
             }
-
+            
+            // Track Information
             Text("Track: \(track.name)")
                 .font(.title)
                 .fontWeight(.bold)
-
+            
             Text("Artist(s): \(track.artistNames)")
                 .font(.headline)
-
+            
             Text("Album: \(track.album?.name ?? "")")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
-
-//            if let releaseDate = track.album.releaseDate {
-//                Text("Release Date: \(releaseDate)")
-//                    .font(.subheadline)
-//                    .foregroundColor(.secondary)
-//            }
-
-            if let url = track.previewURL{
-                Button(isPlaying ? "Pause Preview" : "Play Preview") {
-                    if isPlaying {
-                        player?.pause()
-                    } else {
-                        if player == nil {
-                            player = AVPlayer(url: url)
+            
+            // Audio Preview Controls
+            if let url = track.previewURL {
+                HStack {
+                    Button(action: {
+                        if isPlaying {
+                            player?.pause()
+                        } else {
+                            if player == nil {
+                                player = AVPlayer(url: url)
+                            }
+                            player?.play()
                         }
-                        player?.play()
+                        isPlaying.toggle()
+                    }) {
+                        Image(systemName: isPlaying ? "pause.circle.fill" : "play.circle.fill")
+                            .font(.largeTitle)
+                            .foregroundColor(.blue)
                     }
-                    isPlaying.toggle()
+                    
+                    Text(isPlaying ? "Pause Preview" : "Play Preview")
                 }
                 .padding()
-                .background(isPlaying ? Color.red : Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(8)
             } else {
                 Text("Preview not available")
                     .foregroundColor(.secondary)
             }
-
+            
             Spacer()
         }
         .padding()
         .navigationTitle("Track Details")
         .onDisappear {
-            player?.pause() // Stop playback when leaving the view
+            player?.pause()
             isPlaying = false
         }
     }
 }
-
