@@ -44,6 +44,8 @@ struct TrackDetailView: View {
                                 player = AVPlayer(url: url)
                             }
                             player?.play()
+                            MusicPlayerManager.shared.play(track: track)
+
                         }
                         isPlaying.toggle()
                     }) {

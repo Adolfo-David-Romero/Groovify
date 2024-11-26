@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AVKit
 
 class MusicPlayerManager: ObservableObject{
     
@@ -13,6 +14,8 @@ class MusicPlayerManager: ObservableObject{
     
     @Published var currentTrack: (any TrackDisplayable)? = nil
     @Published var isPlaying: Bool = false
+    @Published private var player: AVPlayer?
+
     
     private init() {}
     
@@ -20,10 +23,15 @@ class MusicPlayerManager: ObservableObject{
     func play(track: any TrackDisplayable) {
             currentTrack = track
             isPlaying = true
+        guard let previewURL = track.previewURL else {
+            return}
+            player = AVPlayer(url: previewURL)
+            player?.play()
         }
         
     func pause() {
             isPlaying = false
+            player?.pause()
     }
         
     func next() {

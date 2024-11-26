@@ -17,6 +17,7 @@ struct GroovifyApp: App {
             HomeView()
 //            InputScreen()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environmentObject(MusicPlayerManager.shared)
         }
     }
 }

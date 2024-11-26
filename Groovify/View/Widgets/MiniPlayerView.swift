@@ -6,55 +6,82 @@
 //
 
 import SwiftUI
+import Combine
 
 struct MiniPlayerView: View {
-    
-    var track: String // Will be replaced with actual track model.
+    @StateObject private var playerManager = MusicPlayerManager.shared
     
     var body: some View {
-        HStack {
-            // Profile Icon (Placeholder)
-            Image(systemName: "music.note")
-                .font(.title)
-                .foregroundColor(.white)
-            
-            Text(track)
-                .font(.title2)
-                .fontWeight(.semibold)
-                .foregroundColor(.white)
-            Spacer()
+        if let track = playerManager.currentTrack {
             HStack {
-                Button(action: {
-                    // Action for previous button
-                }) {
-                    Image(systemName: "backward.fill")
-                        .font(.title2)
+                // Track Image or Icon
+                if let imageURL = track.album?.images.first?.url,
+                let url = URL(string: imageURL) {
+                    AsyncImage(url: url) { phase in
+                        switch phase {
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 50, height: 50)
+                                .cornerRadius(8)
+                        case .failure(_):
+                            Image(systemName: "music.note")
+                                .foregroundColor(.white)
+                        case .empty:
+                            ProgressView()
+                        @unknown default:
+                            Image(systemName: "music.note")
+                                .foregroundColor(.white)
+                        }
+                    }
+                } else {
+                    Image(systemName: "music.note")
+                        .font(.title)
                         .foregroundColor(.white)
                 }
-                Button(action: {
-                    // Action for play/pause button
-                }) {
-                    Image(systemName: "play.fill")
-                        .font(.title2)
+                
+                VStack(alignment: .leading) {
+                    Text(track.name)
+                        .font(.headline)
                         .foregroundColor(.white)
+                    Text(track.artistNames)
+                        .font(.subheadline)
+                        .foregroundColor(.white.opacity(0.7))
                 }
-                Button(action: {
-                    // Action for next button
-                }) {
-                    Image(systemName: "forward.fill")
-                        .font(.title2)
-                    .foregroundColor(.white)}
+                
+                Spacer()
+                
+                // Playback Controls
+                HStack(spacing: 20) {
+                    Button(action: playerManager.previous) {
+                        Image(systemName: "backward.fill")
+                            .font(.title2)
+                            .foregroundColor(.white)
+                    }
+                    
+                    Button(action: {
+                        playerManager.isPlaying
+                            ? playerManager.pause()
+                            : playerManager.play(track: track)
+                    }) {
+                        Image(systemName: playerManager.isPlaying ? "pause.fill" : "play.fill")
+                            .font(.title)
+                            .foregroundColor(.white)
+                    }
+                    
+                    Button(action: playerManager.next) {
+                        Image(systemName: "forward.fill")
+                            .font(.title2)
+                            .foregroundColor(.white)
+                    }
+                }
             }
+            .padding()
+            .background(Color(red: 10.0/255.0, green: 14.0/255.0, blue: 69.0/255.0))
+            .cornerRadius(20)
+            .transition(.move(edge: .bottom))
+//            .animation(.default, value: playerManager.currentTrack)
         }
-        // basic styling, feel free to customize further
-        .padding()
-        .background(Color(red: 10.0/255.0, green: 14.0/255.0, blue: 69.0/255.0))
-        // Rounded corners for the top bar,
-        .cornerRadius(20)
-        
     }
-}
-
-#Preview {
-    MiniPlayerView(track: "Song1")
 }

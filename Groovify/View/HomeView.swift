@@ -90,7 +90,7 @@ struct HomeView: View {
                     SectionView(title: "Genres", items: ["Pop", "Rock", "Hip-Hop", "Jazz", "Classical"])
                     
                 }
-                MiniPlayerView(track: "Song1")
+                MiniPlayerView()
             }
             .onAppear {
                 api.auth.authenticate { result in
