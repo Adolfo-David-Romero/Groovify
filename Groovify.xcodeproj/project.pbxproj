@@ -47,9 +47,30 @@
 		BC064B292CD2D71E0082B7D9 /* GroovifyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GroovifyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		673E12C92CEE2DE70039E38D /* Exceptions for "Groovify" folder in "GroovifyTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"GoogleService-Info.plist",
+			);
+			target = BC064B1E2CD2D71E0082B7D9 /* GroovifyTests */;
+		};
+		673E12CA2CEE2DE70039E38D /* Exceptions for "Groovify" folder in "GroovifyUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"GoogleService-Info.plist",
+			);
+			target = BC064B282CD2D71E0082B7D9 /* GroovifyUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		BC064B0C2CD2D7190082B7D9 /* Groovify */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				673E12C92CEE2DE70039E38D /* Exceptions for "Groovify" folder in "GroovifyTests" target */,
+				673E12CA2CEE2DE70039E38D /* Exceptions for "Groovify" folder in "GroovifyUITests" target */,
+			);
 			path = Groovify;
 			sourceTree = "<group>";
 		};
