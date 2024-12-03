@@ -23,8 +23,7 @@ struct HomeView: View {
     
     @State private var selectedAlbumData: AlbumData?
     @State private var selectedPlaylistData: PlaylistTracksWrapper?
-    private var api = SpotifyAPI()
-
+    @Environment(\.spotifyAPI) private var api
     
     // MARK: - Functions
     private func loadAlbumData(for href: String) {

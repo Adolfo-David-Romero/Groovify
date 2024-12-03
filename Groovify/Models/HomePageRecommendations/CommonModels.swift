@@ -7,6 +7,14 @@
 
 import Foundation
 
+struct SearchResponse: Decodable {
+    let tracks: TrackResults
+}
+
+struct TrackResults: Decodable {
+    let items: [Track]
+}
+
 // MARK: - CarouselItem (Protocol to display carousel items)
 protocol CarouselItem: Identifiable {
     var name: String { get }

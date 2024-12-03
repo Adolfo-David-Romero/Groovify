@@ -8,8 +8,10 @@
 import Foundation
 
 class SpotifyAPI {
+    static let shared = SpotifyAPI() // Singleton instance
+    private init() {} // Prevent direct instantiation
     
-    // TODO: Add in environment variables.
+    // Properties
     private let baseURL = "https://api.spotify.com/v1"
     public var auth = SpotifyAuth()
     
@@ -45,6 +47,8 @@ class SpotifyAPI {
             completion(.success(data))
         }.resume()
     }
+    
+    // Spotify deprecated this unfortunately so we can't use it anymore
     func getFeaturedPlaylists(completion: @escaping (Result<[Playlist], Error>) -> Void) {
         let endpoint = "/browse/featured-playlists"
         
@@ -131,6 +135,25 @@ class SpotifyAPI {
                 case .failure(let error):
                     print("Network error: \(error)")
                     completion(.failure(error))
+            }
+        }
+    }
+    
+    func searchTracks(query: String, completion: @escaping (Result<[Track], Error>) -> Void) {
+        let endpoint = "/search?q=\(query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")&type=track&limit=10"
+        
+        makeRequest(endpoint: endpoint) { result in
+            switch result {
+            case .success(let data):
+                do {
+                    let json = try JSONDecoder().decode(SearchResponse.self, from: data)
+                    let tracks = json.tracks.items
+                    completion(.success(tracks))
+                } catch {
+                    completion(.failure(error))
+                }
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
