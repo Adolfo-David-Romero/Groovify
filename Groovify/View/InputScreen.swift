@@ -53,7 +53,6 @@ struct InputScreen: View {
                 }
             }
             .background(Color(red: 10.0/255.0, green: 14.0/255.0, blue: 69.0/255.0))
-//            .navigationTitle("Groovify Search")
         }
     }
 
@@ -106,57 +105,49 @@ struct InputScreen: View {
         }
     }
 
+// Add a normal search view,
+// TODO: Separate this into a separate view later
     var normalSearchView: some View {
-        NavigationView {
-            VStack {
+        VStack {
+            Text("Normal Search")
+                .foregroundColor(.white)
+                .padding(.top)
+
+            HStack {
                 TextField("Search tracks...", text: $searchQuery, onCommit: search)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                Button("Search"){
-                    search()
-                }
-                
-                List(tracks) { track in
-                    Button(action: {
-                        selectedTrack = track
-                    }) {
-                        HStack {
-                            Text(track.name)
-                            Spacer()
-                            Text(track.artists.map { $0.name }.joined(separator: ", "))
-                                .foregroundColor(.secondary)
-                        }
-                    }
-                }
-                
-                if let errorMessage = errorMessage {
-                    Text("Error: \(errorMessage)")
-                        .foregroundColor(.red)
-                }
-                
-                NavigationLink(
-                    destination: selectedTrack.map { TrackDetailView(track: $0) },
-                    isActive: Binding<Bool>(
-                        get: { selectedTrack != nil },
-                        set: { isActive in
-                            if !isActive { selectedTrack = nil }
-                        }
-                    )
-                ) {
-                    EmptyView()
-                }
+                    .textFieldStyle(.roundedBorder)
             }
-            .navigationTitle("Spotify Search")
-            .onAppear {
-                api.auth.authenticate { result in
-                    if case .failure(let error) = result {
-                        errorMessage = error.localizedDescription
-                    }
+            .padding(.horizontal)
+
+            Button(action: search) {
+                Text("Search")
+                    .foregroundColor(.white)
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 20)
+                    .background(Color.purple)
+                    .cornerRadius(10)
+                    .font(.system(size: 18))
+            }
+            .padding()
+
+            ScrollView {
+                TrackListView(tracks: tracks)
+            }
+
+            if let errorMessage = errorMessage {
+                Text("Error: \(errorMessage)")
+                    .foregroundColor(.red)
+                    .padding()
+            }
+        }
+        .onAppear {
+            api.auth.authenticate { result in
+                if case .failure(let error) = result {
+                    errorMessage = error.localizedDescription
                 }
             }
         }
     }
-    
 }
 
 #Preview {

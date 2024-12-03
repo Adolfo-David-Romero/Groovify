@@ -46,12 +46,13 @@ struct TrackListView<T: TrackDisplayable>: View {
                     VStack(alignment: .leading) {
                         Text(track.name)
                             .font(.body)
+                            .foregroundStyle(.white)
                         Text(track.artistNames)
                             .font(.caption)
                             .foregroundColor(.gray)
                     }
                     Spacer()
-                    if track.URI != nil {
+                    if track.external_urls.spotify != "" {
                         Button("Open", action: {
                             // take to url
                             print(track.external_urls.spotify)
