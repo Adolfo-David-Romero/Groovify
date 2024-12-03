@@ -14,7 +14,7 @@ struct TrackListView<T: TrackDisplayable>: View {
         selectedTrack: The selected track to display in the detail view sheet.
      */
     let tracks: [T]
-    @State private var selectedTrack: T? = nil // Track for the sheet
+//    @State private var selectedTrack: T? = nil // Track for the sheet
     
     // MARK: - Body
     var body: some View {
@@ -51,23 +51,25 @@ struct TrackListView<T: TrackDisplayable>: View {
                             .foregroundColor(.gray)
                     }
                     Spacer()
-                    if track.previewURL != nil {
-                        Image(systemName: "play.circle")
-                            .font(.title2)
+                    if track.URI != nil {
+                        Button("Open", action: {
+                            // take to url
+                            print(track.external_urls.spotify)
+                            UIApplication.shared.open(URL(string: track.external_urls.spotify)!)})
                     }
                 }
                 .padding(.horizontal)
                 // Show the detail view when tapped for each track
-                .onTapGesture {
-                    // Set the selected track and present the detail view
-                    selectedTrack = track
-                }
+//                .onTapGesture {
+//                    // Set the selected track and present the detail view
+//                    selectedTrack = track
+//                }
                 Divider()
             }
         }
-        // Present the detail view as a sheet
-        .sheet(item: $selectedTrack) { track in
-            TrackDetailView(track: track)
-        }
+//        // Present the detail view as a sheet
+//        .sheet(item: $selectedTrack) { track in
+//            TrackDetailView(track: track)
+//        }
     }
 }
