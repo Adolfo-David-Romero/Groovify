@@ -116,6 +116,9 @@ struct InputScreen: View {
             HStack {
                 TextField("Search tracks...", text: $searchQuery, onCommit: search)
                     .textFieldStyle(.roundedBorder)
+                    .onChange(of: searchQuery) {
+                        search()
+                    }
             }
             .padding(.horizontal)
 
@@ -132,12 +135,6 @@ struct InputScreen: View {
 
             ScrollView {
                 TrackListView(tracks: tracks)
-            }
-
-            if let errorMessage = errorMessage {
-                Text("Error: \(errorMessage)")
-                    .foregroundColor(.red)
-                    .padding()
             }
         }
         .onAppear {
