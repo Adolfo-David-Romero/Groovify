@@ -19,13 +19,13 @@ struct GroovifyApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack{
-                RootView().environment(\.managedObjectContext, persistenceController.container.viewContext)
-                    .environmentObject(viewModel)
+//                RootView().environment(\.managedObjectContext, persistenceController.container.viewContext)
+//                    .environmentObject(viewModel)
+                InputScreen()
+                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
             }
             //            ContentView() // commented out for testing
             //HomeView()
-            InputScreen()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
             // Add the environment object to the view hierarchy, as music player manager is an observable object,
             // and it is used in multiple views.
                 .environment(\.spotifyAPI, SpotifyAPI.shared)
