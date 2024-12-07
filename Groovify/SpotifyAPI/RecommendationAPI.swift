@@ -1,4 +1,4 @@
-import Foundation
+import SwiftUI
 
 struct RecommendationResponse: Codable {
     let genres: [String]
@@ -8,9 +8,10 @@ class RecommendationViewModel: ObservableObject {
     @Published var genres: [String] = []
     @Published var errorMessage: String? = nil
     
-    func fetchRecommendations(for mood: String) {
+    func fetchRecommendations(for mood: String, completion: @escaping (Result<[String], Error>) -> Void) {
         guard let url = URL(string: "https://refactored-chainsaw-v45xprx5g54cwvvp-8000.app.github.dev/recommendation") else {
             errorMessage = "Invalid URL"
+            completion(.failure(NSError(domain: "NetworkError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
             return
         }
         
@@ -27,6 +28,7 @@ class RecommendationViewModel: ObservableObject {
             if let error = error {
                 DispatchQueue.main.async {
                     self?.errorMessage = "Error: \(error.localizedDescription)"
+                    completion(.failure(error))
                 }
                 return
             }
@@ -35,21 +37,26 @@ class RecommendationViewModel: ObservableObject {
             guard let data = data,
                   let httpResponse = response as? HTTPURLResponse,
                   httpResponse.statusCode == 200 else {
+                let error = NSError(domain: "NetworkError", code: -2, userInfo: [NSLocalizedDescriptionKey: "Invalid server response"])
                 DispatchQueue.main.async {
                     self?.errorMessage = "Invalid server response"
+                    completion(.failure(error))
                 }
                 return
             }
             
             // Decode JSON response
-            if let decodedResponse = try? JSONDecoder().decode(RecommendationResponse.self, from: data) {
+            do {
+                let decodedResponse = try JSONDecoder().decode(RecommendationResponse.self, from: data)
                 DispatchQueue.main.async {
                     self?.genres = decodedResponse.genres
                     self?.errorMessage = nil
+                    completion(.success(decodedResponse.genres))
                 }
-            } else {
+            } catch {
                 DispatchQueue.main.async {
                     self?.errorMessage = "Failed to decode response"
+                    completion(.failure(error))
                 }
             }
         }.resume()

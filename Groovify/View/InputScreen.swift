@@ -4,23 +4,25 @@
 //
 //  Created by Iman on 2024-11-07.
 //
-
 import SwiftUI
 
 struct InputScreen: View {
     @State private var searchText = ""
     @State private var selectedEmotions = Set<String>()
-    @State private var searchMode: SearchMode = .emotionBased // To toggle between modes
+    @State private var searchMode: SearchMode = .emotionBased
     @State private var searchQuery = ""
     @State private var tracks: [Track] = []
     @State private var errorMessage: String?
     @State private var selectedTrack: Track?
+    @State private var isLoading = false
+    @StateObject private var recommendationViewModel = RecommendationViewModel()
     @Environment(\.spotifyAPI) private var api
 
     enum SearchMode: String, CaseIterable {
         case emotionBased = "Emotion Search"
         case normalSearch = "Normal Search"
     }
+    
     private func search() {
         api.searchTracks(query: searchQuery) { result in
             DispatchQueue.main.async {
@@ -35,9 +37,9 @@ struct InputScreen: View {
     }
 
     private func searchTracksByGenres(_ genres: [String]) {
-        // Step 5: Search Spotify using the genres
+        // Combine genres for Spotify search
         let genreQuery = genres.joined(separator: " OR ")
-        let searchQuery = "genre:\(genreQuery)"
+        let searchQuery = "%3Dgenre:\(genreQuery)"
         print("Searching Spotify for genres: \(searchQuery)")
 
         api.searchTracks(query: searchQuery) { result in
@@ -46,12 +48,37 @@ struct InputScreen: View {
                 case .success(let tracks):
                     // Print the retrieved track data
                     print("Found \(tracks.count) tracks")
+                    self.tracks = tracks
                     for track in tracks {
                         print("Track Name: \(track.name), Artist: \(track.artistNames), URI: \(track.uri)")
                     }
                 case .failure(let error):
                     errorMessage = error.localizedDescription
                     print("Error searching tracks: \(error)")
+                }
+            }
+        }
+    }
+
+    private func processEmotionSearch() {
+        // Combine selected emotions into a mood string
+        guard !selectedEmotions.isEmpty else {
+            errorMessage = "Please select at least one emotion"
+            return
+        }
+        
+        isLoading = true
+        let mood = selectedEmotions.joined(separator: ", ")
+        
+        recommendationViewModel.fetchRecommendations(for: mood) { result in
+            DispatchQueue.main.async {
+                isLoading = false
+                switch result {
+                case .success(let genres):
+                    // Search Spotify with the received genres
+                    searchTracksByGenres(genres)
+                case .failure(let error):
+                    errorMessage = error.localizedDescription
                 }
             }
         }
@@ -116,14 +143,40 @@ struct InputScreen: View {
                 .padding(.vertical)
             }
 
-            NavigationLink(destination: OutputScreen(initialSearchText: searchText)) {
-                Text("See Results")
-                    .foregroundColor(.white)
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 20)
-                    .background(Color.blue)
-                    .cornerRadius(10)
-                    .font(.system(size: 18))
+            Button(action: processEmotionSearch) {
+                if isLoading {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                } else {
+                    Text("See Results")
+                        .foregroundColor(.white)
+                        .padding(.vertical, 10)
+                        .padding(.horizontal, 20)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                        .font(.system(size: 18))
+                }
+            }
+            .disabled(selectedEmotions.isEmpty || isLoading)
+
+            // Error message display
+            if let errorMessage = errorMessage {
+                Text(errorMessage)
+                    .foregroundColor(.red)
+                    .padding()
+            }
+
+            // Show results list if tracks are available
+            if !tracks.isEmpty {
+                ScrollView {
+                    TrackListView(tracks: tracks)
+                }
+            }
+        }.onAppear {
+            api.auth.authenticate { result in
+                if case .failure(let error) = result {
+                    errorMessage = error.localizedDescription
+                }
             }
         }
     }
