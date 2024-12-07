@@ -21,7 +21,8 @@ struct GroovifyApp: App {
             NavigationStack{
 //                RootView().environment(\.managedObjectContext, persistenceController.container.viewContext)
 //                    .environmentObject(viewModel)
-                InputScreen()
+                RecommendationView()
+//                InputScreen()
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
             }
             //            ContentView() // commented out for testing

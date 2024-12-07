@@ -6,14 +6,6 @@
 //
 
 import SwiftUI
-import FirebaseVertexAI
-
-// Initialize the Vertex AI service
-let vertex = VertexAI.vertexAI()
-
-// Initialize the generative model with a model that supports your use case
-// Gemini 1.5 models are versatile and can be used with all API capabilities
-let model = vertex.generativeModel(modelName: "gemini-1.5-flash")
 
 struct InputScreen: View {
     @State private var searchText = ""
@@ -41,32 +33,27 @@ struct InputScreen: View {
             }
         }
     }
-    
-    private func test() async {
-        let url = URL(string: "https://api-inference.huggingface.co/models/bigscience/bloom")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("Bearer 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", forHTTPHeaderField: "Authorization")
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        let body: [String: Any] = ["inputs": "What is 1 + 2?"]
-        request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
+    private func searchTracksByGenres(_ genres: [String]) {
+        // Step 5: Search Spotify using the genres
+        let genreQuery = genres.joined(separator: " OR ")
+        let searchQuery = "genre:\(genreQuery)"
+        print("Searching Spotify for genres: \(searchQuery)")
 
-        print(request.allHTTPHeaderFields) // Log request headers
-
-        do {
-            let (data, _) = try await URLSession.shared.data(for: request)
-            print("Hello")
-            print("Response data: \(data)")
-            // print raw data
-            if let rawResponse = String(data: data, encoding: .utf8) {
-                print("Raw response: \(rawResponse)")
+        api.searchTracks(query: searchQuery) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let tracks):
+                    // Print the retrieved track data
+                    print("Found \(tracks.count) tracks")
+                    for track in tracks {
+                        print("Track Name: \(track.name), Artist: \(track.artistNames), URI: \(track.uri)")
+                    }
+                case .failure(let error):
+                    errorMessage = error.localizedDescription
+                    print("Error searching tracks: \(error)")
+                }
             }
-            if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
-                print("JSON Response: \(json)")
-            }
-        } catch {
-            print("Error: \(error)")
         }
     }
 
@@ -137,10 +124,6 @@ struct InputScreen: View {
                     .background(Color.blue)
                     .cornerRadius(10)
                     .font(.system(size: 18))
-            }
-            Button("Test") {
-                Task{
-                    await test()}
             }
         }
     }
