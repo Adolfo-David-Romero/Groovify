@@ -9,25 +9,33 @@ import SwiftUI
 import Firebase
 @main
 struct GroovifyApp: App {
+    //Declared viewmodels
+    @StateObject var authViewModel: AuthViewModel
+    @StateObject var homeViewModel: HomeViewModel
+    
+    //Persistence controller
     let persistenceController = PersistenceController.shared
-    @StateObject var viewModel = AuthViewModel()
+    
+    @Environment(\.spotifyAPI) var api
     
     init(){
+        //MARK: - Firebase services
         FirebaseApp.configure()
+        
+        //MARK: - Viewmodels
+        
+        _authViewModel = StateObject(wrappedValue: AuthViewModel())//Auth
+        _homeViewModel = StateObject(wrappedValue: HomeViewModel(api: SpotifyAPI.shared))//Home
     }
 
     var body: some Scene {
         WindowGroup {
             NavigationStack{
-//                RootView().environment(\.managedObjectContext, persistenceController.container.viewContext)
-//                    .environmentObject(viewModel)
-                InputScreen()
+                RootView()
+                    .environmentObject(authViewModel)
+                    .environmentObject(homeViewModel)
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
             }
-            //            ContentView() // commented out for testing
-            //HomeView()
-            // Add the environment object to the view hierarchy, as music player manager is an observable object,
-            // and it is used in multiple views.
                 .environment(\.spotifyAPI, SpotifyAPI.shared)
                 .environmentObject(MusicPlayerManager.shared)
         }
@@ -40,7 +48,7 @@ struct RootView: View {
 
     var body: some View {
             if viewModel.userSession != nil {
-                ContentView()
+                MainTabView() // Main navigation, insert additonal views in MainTabView()
 
             } else {
                 LoginView()
@@ -49,5 +57,5 @@ struct RootView: View {
     }
 }
 #Preview {
-    RootView().environmentObject(AuthViewModel())
+    RootView().environmentObject(AuthViewModel()).environmentObject(HomeViewModel(api: SpotifyAPI.shared))
 }

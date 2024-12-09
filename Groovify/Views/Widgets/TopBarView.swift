@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct TopBarView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
     var body: some View {
         HStack {
             // Profile Icon (Placeholder)
             VStack {
-                Text("Hello, User")
+                Text("Hello, \(authViewModel.currentUser?.fullname ?? "User")")
                     .font(.title2)
                     .foregroundColor(.white)
                 Text("Ready to find your groove?")
@@ -28,9 +29,11 @@ struct TopBarView: View {
                 /**
                  TODO: Replace this with a custom settings icon or image for Groovify..
                  */
-                Image(systemName: "gearshape")
-                    .font(.title)
-                    .foregroundColor(.white)
+                NavigationLink(destination: UserProfileView().environmentObject(authViewModel)){
+                    Image(systemName: "gearshape")
+                        .font(.title)
+                        .foregroundColor(.white)
+                }
             }
         }
         // Just added simple styling, feel free to customize further, I am not really good at this/:)
@@ -43,5 +46,5 @@ struct TopBarView: View {
 }
 
 #Preview {
-    TopBarView()
+    TopBarView().environmentObject(AuthViewModel())
 }

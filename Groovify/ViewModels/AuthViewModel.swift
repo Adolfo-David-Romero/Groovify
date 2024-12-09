@@ -17,7 +17,6 @@ class AuthViewModel: ObservableObject {
     @Published var userSession: FirebaseAuth.User? //Help's determine if user is logged in or not
     @Published var currentUser: User?
     
-    //@AppStorage("isUserSetupComplete") var isUserSetupComplete: Bool = false //Remembers whether the user set up their app in the beggining
     
     init(){
         self.userSession = Auth.auth().currentUser
@@ -64,8 +63,6 @@ class AuthViewModel: ObservableObject {
     func deleteAccount() async {
         guard let user = Auth.auth().currentUser else { return }
         do {
-            // Remove the user document from Firestore
-            try await Firestore.firestore().collection("users").document(user.uid).delete()
             
             // Delete the user from Firebase Authentication
             try await user.delete()
