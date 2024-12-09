@@ -17,7 +17,7 @@ struct RegistrationView: View {
     @EnvironmentObject var viewModel: AuthViewModel
     var body: some View {
         VStack{
-            Image("").resizable().scaledToFill().frame(height: 200).padding(.vertical, 32)
+            Image("groovify_icon").resizable().scaledToFill().frame(width: 40.0, height: 200).padding(.all, 32)
             VStack(spacing: 24){
                 //Email
                 AuthInputComponentView(text: $email, title: "Email Address", placeHolder: "admin@admin.com")
@@ -53,7 +53,9 @@ struct RegistrationView: View {
             //Register Button
             Button{
                 Task{
+                    dismiss() //pops back to home view
                     try await viewModel.createUser(withEmail: email, password: password, fullName: fullName)
+                    
                 }
             }label: {
                 HStack{

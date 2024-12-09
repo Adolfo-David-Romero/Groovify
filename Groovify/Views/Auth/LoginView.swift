@@ -18,7 +18,7 @@ struct LoginView: View {
             VStack{
                 VStack{
                     //Image
-                    Image("").resizable().scaledToFill().frame(height: 200).padding(.vertical, 32)
+                    Image("groovify_icon").resizable().scaledToFill().frame(width: 40.0, height: 200).padding(.all, 32)
                     VStack(spacing: 24){
                         //email
                         AuthInputComponentView(text: $email, title: String(localized: "Email Address"),placeHolder: "admin@admin.com").textInputAutocapitalization(.none)

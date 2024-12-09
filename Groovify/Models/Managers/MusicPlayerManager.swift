@@ -25,7 +25,7 @@ class MusicPlayerManager: ObservableObject{
     @Published private var player: AVPlayer?
 
     
-    private init() {}
+    init() {}
     
     //MARK: - Methods
     func play(track: any TrackDisplayable) {
