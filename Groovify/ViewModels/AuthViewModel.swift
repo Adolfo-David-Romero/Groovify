@@ -17,7 +17,6 @@ class AuthViewModel: ObservableObject {
     @Published var userSession: FirebaseAuth.User? //Help's determine if user is logged in or not
     @Published var currentUser: User?
     
-    //@AppStorage("isUserSetupComplete") var isUserSetupComplete: Bool = false //Remembers whether the user set up their app in the beggining
     
     init(){
         self.userSession = Auth.auth().currentUser

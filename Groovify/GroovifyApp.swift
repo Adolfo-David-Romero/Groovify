@@ -9,11 +9,15 @@ import SwiftUI
 import Firebase
 @main
 struct GroovifyApp: App {
+    @StateObject var authViewModel: AuthViewModel
     let persistenceController = PersistenceController.shared
-    @StateObject var viewModel = AuthViewModel()
+    //@StateObject var viewModel = AuthViewModel()
     
     init(){
         FirebaseApp.configure()
+        
+        //Auth View model
+        _authViewModel = StateObject(wrappedValue: AuthViewModel())
     }
 
     var body: some Scene {
@@ -21,7 +25,8 @@ struct GroovifyApp: App {
             NavigationStack{
 //                RootView().environment(\.managedObjectContext, persistenceController.container.viewContext)
 //                    .environmentObject(viewModel)
-                InputScreen()
+                RootView()
+                    .environmentObject(authViewModel)
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
             }
             //            ContentView() // commented out for testing
@@ -40,7 +45,7 @@ struct RootView: View {
 
     var body: some View {
             if viewModel.userSession != nil {
-                ContentView()
+                InputScreen()
 
             } else {
                 LoginView()
