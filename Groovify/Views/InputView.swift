@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct InputScreen: View {
+struct InputView: View {
     @State private var searchText = ""
     @State private var selectedEmotions = Set<String>()
     @State private var searchMode: SearchMode = .emotionBased // To toggle between modes
@@ -148,5 +148,5 @@ struct InputScreen: View {
 }
 
 #Preview {
-    InputScreen()
+    InputView()
 }

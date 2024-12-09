@@ -74,8 +74,9 @@ struct UserProfileView: View {
                                 message: Text("This action will permanently delete your account."),
                                 primaryButton: .destructive(Text("Delete")) {
                                     Task {
-                                        await viewModel.deleteAccount()
                                         dismiss()
+                                        await viewModel.deleteAccount()
+                                        
                                     }
                                 },
                                 secondaryButton: .cancel()

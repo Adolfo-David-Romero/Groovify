@@ -45,7 +45,7 @@ struct RootView: View {
 
     var body: some View {
             if viewModel.userSession != nil {
-                InputScreen()
+                MainTabView()
 
             } else {
                 LoginView()

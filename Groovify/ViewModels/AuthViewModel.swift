@@ -63,8 +63,6 @@ class AuthViewModel: ObservableObject {
     func deleteAccount() async {
         guard let user = Auth.auth().currentUser else { return }
         do {
-            // Remove the user document from Firestore
-            try await Firestore.firestore().collection("users").document(user.uid).delete()
             
             // Delete the user from Firebase Authentication
             try await user.delete()

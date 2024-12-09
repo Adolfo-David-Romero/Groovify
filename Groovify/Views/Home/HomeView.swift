@@ -7,7 +7,48 @@
 
 import SwiftUI
 
-
+//MARK: - HOME SCREEN
+///Home screen is used to overlay hamburger menu on homeview (MenuView)
+struct HomeScreen: View {
+    @State var showMenu = false
+    var body: some View {
+        let drag = DragGesture() //drag to close
+            .onEnded{
+                if $0.translation.width < -100{
+                    withAnimation{
+                        self.showMenu = false
+                    }
+                }
+            }
+        return NavigationStack{
+            GeometryReader{ geometry in
+                HomeView(showMenu: self.$showMenu).frame(width: geometry.size.width, height: geometry.size.height)
+                    .offset(x: self.showMenu ?
+                            geometry.size.width/2 : 0)
+                    .disabled(self.showMenu ? true : false)
+                if self.showMenu{
+                    MenuView()
+                        .frame(width: geometry.size.width/2)
+                        .transition(.move(edge: .leading))
+                }
+            }
+            .gesture(drag)
+        }.navigationTitle("Side Menu")
+            .toolbar{
+                ToolbarItem(placement: .topBarLeading, content: {
+                    Button(action: {
+                        withAnimation {
+                            self.showMenu.toggle()
+                        }
+                    }, label: {
+                        Image(systemName: "line.horizontal.3").imageScale(.large)
+                    })
+                }
+                            
+                )
+            }
+    }
+}
 struct HomeView: View {
     @State private var errorMessage: String?
     
@@ -24,7 +65,7 @@ struct HomeView: View {
     @State private var selectedAlbumData: AlbumData?
     @State private var selectedPlaylistData: PlaylistTracksWrapper?
     @Environment(\.spotifyAPI) private var api
-    
+    @Binding var showMenu: Bool
     // MARK: - Functions
     private func loadAlbumData(for href: String) {
         print("Loading album data for \(href)")
@@ -65,14 +106,16 @@ struct HomeView: View {
     
     // MARK: - Body
     var body: some View {
+        @EnvironmentObject var authViewModel: AuthViewModel
         /**
          Changed sheet to navigation, as the sheet was not working as expected.
          Main issue was sheet was not able to navigate to TrackDetailsView, properly.
          */
         NavigationStack{
             VStack{
-                TopBarView()
                 ScrollView{
+                TopBarView()
+                
                     
                     /**
                      Placeholders for other components of the HomeView.
@@ -149,5 +192,5 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
+    HomeView(showMenu: .constant(false)).environmentObject(MusicPlayerManager())
 }
