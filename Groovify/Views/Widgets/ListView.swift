@@ -5,7 +5,8 @@ struct ListView: View {
     
     // TODO: Replace this with a model for tracks
     // like Track(name: String, artist: String, duration: String, image: String)
-    var tracks: [String] // Tracks to display in the list view
+    var tracks: [NewRelease] // Tracks to display in the list view
+    //changes [String] to [NewRelease]
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -17,7 +18,7 @@ struct ListView: View {
             
             // Tracks list
             VStack(alignment: .leading, spacing: 10) {
-                ForEach(tracks, id: \.self) { track in
+                ForEach(tracks) { track in //tracks, id: \.self
                     HStack {
                         /**
                          TODO: Replace this with an image of the track or artist
@@ -26,9 +27,12 @@ struct ListView: View {
                             .foregroundColor(.blue)
                             .font(.title2)
                         
-                        Text(track)
-                            .font(.body)
-                            .foregroundColor(.primary)
+//                        Text(track)
+//                            .font(.body)
+//                            .foregroundColor(.primary)
+                        Text(track.name) // Access the song name from the NewRelease object
+                               .font(.body)
+                               .foregroundColor(.primary)
                         
                         Spacer()
                     }
@@ -40,6 +44,12 @@ struct ListView: View {
     }
 }
 
+//#Preview {
+//    ListView(title: "Your Recent Tracks", tracks: ["Song1", "Song2", "Song3", "Song4", "Song5"])
+//}
 #Preview {
-    ListView(title: "Your Recent Tracks", tracks: ["Song1", "Song2", "Song3", "Song4", "Song5"])
+    ListView(title: "Your Recent Tracks", tracks: [
+        NewRelease(album_type: "", id: "", name: "Song 1", images: [], release_date: "", href: ""),
+        NewRelease(album_type: "", id: "", name: "Song 2", images: [], release_date: "", href: ""),
+    ])
 }

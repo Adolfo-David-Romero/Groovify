@@ -23,8 +23,9 @@ struct HomeView: View {
                 ScrollView {
                     VStack(spacing: 20) {
                         // Recent Tracks
-                        ListView(title: "Your Recent Tracks", tracks: ["Song1", "Song2", "Song3", "Song4", "Song5"])
-
+//                        ListView(title: "Your Recent Tracks", tracks: [homeViewModel.newReleases.name]) //"Song1", "Song2", "Song3", "Song4", "Song5"
+                        ListView(title: "Your Recent Tracks", tracks: Array(homeViewModel.newReleases.prefix(5)))
+                        
                         // Top Charts Section
                         SectionView(title: "Top Charts", items: ["Song1", "Song2", "Song3", "Song4", "Song5"])
 
