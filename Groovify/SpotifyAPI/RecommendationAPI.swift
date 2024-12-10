@@ -9,7 +9,7 @@ class RecommendationViewModel: ObservableObject {
     @Published var errorMessage: String? = nil
     
     func fetchRecommendations(for mood: String, completion: @escaping (Result<[String], Error>) -> Void) {
-        guard let url = URL(string: "http://34.47.47.161:8000/recommendation") else {
+        guard let url = URL(string: "https://web-production-0993.up.railway.app/recommendation") else {
             errorMessage = "Invalid URL"
             completion(.failure(NSError(domain: "NetworkError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
             return

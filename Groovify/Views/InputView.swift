@@ -17,26 +17,11 @@ struct InputView: View {
     @State private var isLoading = false
     @StateObject private var recommendationViewModel = RecommendationViewModel()
     @Environment(\.spotifyAPI) private var api
-    @State private var navigateToOutputScreen = false
-    @State private var outputTracks: [Track] = []
-// For navigation
-
+    @State private var navigateToOutput = false // For navigation
+    
     enum SearchMode: String, CaseIterable {
         case emotionBased = "Emotion Search"
         case normalSearch = "Normal Search"
-    }
-    
-    private func search() {
-        api.searchTracks(query: searchQuery) { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let tracks):
-                    self.tracks = tracks
-                case .failure(let error):
-                    errorMessage = error.localizedDescription
-                }
-            }
-        }
     }
 
     private func processEmotionSearch() {
@@ -64,22 +49,33 @@ struct InputView: View {
     private func searchTracksByGenres(_ genres: [String]) {
         let genreQuery = genres.joined(separator: " OR ")
         let searchQuery = "%3Dgenre:\(genreQuery)"
-        print("Searching Spotify for genres: \(searchQuery)")
 
         api.searchTracks(query: searchQuery) { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let tracks):
-                    self.outputTracks = tracks // Assign to output tracks
-                    self.navigateToOutputScreen = true // Trigger navigation
+                    self.tracks = tracks
+                    navigateToOutput = true // Trigger navigation
                 case .failure(let error):
                     errorMessage = error.localizedDescription
-                    print("Error searching tracks: \(error)")
                 }
             }
         }
     }
 
+    private func search() {
+        api.searchTracks(query: searchQuery) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let tracks):
+                    self.tracks = tracks
+                    navigateToOutput = true // Add navigation trigger
+                case .failure(let error):
+                    errorMessage = error.localizedDescription
+                }
+            }
+        }
+    }
 
     var body: some View {
         NavigationStack {
@@ -100,23 +96,22 @@ struct InputView: View {
                 }
             }
             .background(Color(red: 10.0 / 255.0, green: 14.0 / 255.0, blue: 69.0 / 255.0))
-            // Add navigation destination here
-            .navigationDestination(isPresented: $navigateToOutputScreen) {
+            .navigationDestination(isPresented: $navigateToOutput) {
                 OutputScreen(
-                    initialSearchText: selectedEmotions.joined(separator: ", "),
-                    tracks: outputTracks
+                    initialSearchText: searchMode == .emotionBased
+                        ? selectedEmotions.joined(separator: ", ")
+                        : searchQuery,
+                    tracks: tracks
                 )
             }
         }
     }
-
 
     var emotionSearchView: some View {
         VStack {
             Text("Emotions")
                 .foregroundColor(.white)
 
-            // Search bar
             HStack {
                 TextField("🤩 How are you feeling today?", text: $searchText)
                     .textFieldStyle(.roundedBorder)
@@ -132,7 +127,6 @@ struct InputView: View {
                             } else {
                                 selectedEmotions.insert(emotion)
                             }
-                            print("Selected emotions: \(selectedEmotions)")
                         }) {
                             Text("#\(emotion)")
                                 .foregroundColor(.white)
@@ -164,15 +158,11 @@ struct InputView: View {
             }
             .disabled(selectedEmotions.isEmpty || isLoading)
 
-            // Error message display
             if let errorMessage = errorMessage {
                 Text(errorMessage)
                     .foregroundColor(.red)
                     .padding()
             }
-        }
-        .navigationDestination(isPresented: $navigateToOutputScreen) {
-            OutputScreen(initialSearchText: searchText, tracks: outputTracks)
         }
         .onAppear {
             api.auth.authenticate { result in
@@ -183,14 +173,12 @@ struct InputView: View {
         }
     }
 
-
     var normalSearchView: some View {
         VStack {
             Text("Normal Search")
                 .foregroundColor(.white)
                 .padding(.top)
-            
-            // add on change here.
+
             HStack {
                 TextField("Search tracks...", text: $searchQuery, onCommit: search)
                     .textFieldStyle(.roundedBorder)
