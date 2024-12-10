@@ -56,9 +56,38 @@
 		BC064B292CD2D71E0082B7D9 /* GroovifyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GroovifyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		0C3835002D07AFB200C72DAF /* Exceptions for "Groovify" folder in "Groovify" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = BC064B092CD2D7190082B7D9 /* Groovify */;
+		};
+		673E12C92CEE2DE70039E38D /* Exceptions for "Groovify" folder in "GroovifyTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"GoogleService-Info.plist",
+			);
+			target = BC064B1E2CD2D71E0082B7D9 /* GroovifyTests */;
+		};
+		673E12CA2CEE2DE70039E38D /* Exceptions for "Groovify" folder in "GroovifyUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"GoogleService-Info.plist",
+			);
+			target = BC064B282CD2D71E0082B7D9 /* GroovifyUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		BC064B0C2CD2D7190082B7D9 /* Groovify */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				0C3835002D07AFB200C72DAF /* Exceptions for "Groovify" folder in "Groovify" target */,
+				673E12C92CEE2DE70039E38D /* Exceptions for "Groovify" folder in "GroovifyTests" target */,
+				673E12CA2CEE2DE70039E38D /* Exceptions for "Groovify" folder in "GroovifyUITests" target */,
+			);
 			path = Groovify;
 			sourceTree = "<group>";
 		};
@@ -477,6 +506,7 @@
 				DEVELOPMENT_TEAM = HB3XP4BKLJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Groovify/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -507,6 +537,7 @@
 				DEVELOPMENT_TEAM = HB3XP4BKLJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Groovify/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
