@@ -18,9 +18,25 @@ struct OutputScreen: View {
     var body: some View {
         NavigationStack{
             VStack {
-                Text("Groovify Song List:")
+                HStack{
+                    Text("GROOVIFY")
+                    .font(.largeTitle.bold())
                     .foregroundColor(.white)
-            
+                    
+                    Spacer()
+                    
+                    Image("groovify_icon")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 50)
+                        
+
+                }
+//
+//                Text("Groovify Song List:")
+//                    .foregroundColor(.white)
+//                Spacer()
+//            
                 
                 // Search bar
                 HStack {
@@ -31,26 +47,14 @@ struct OutputScreen: View {
                 }
                 .padding(.horizontal)
                 
-                
-             HStack{
-                 Text("GROOVIFY")
-                 .font(.largeTitle.bold())
-                 .foregroundColor(.white)
-                 
-                 Spacer()
-                 
-                 Image("groovify_icon")
-                     .resizable()
-                     .aspectRatio(contentMode: .fit)
-                     .frame(height: 50)
-                     
-
-             }.padding()
+                Spacer(minLength: 30)
+          
                 
                 Text(personalizedMessage)
                 .font(.headline)
                 .padding(.bottom, 20)
                 .foregroundColor(.white)
+                Spacer()
                 
                 // Song List
                 List(songTitles, id: \.self) { songTitle in
