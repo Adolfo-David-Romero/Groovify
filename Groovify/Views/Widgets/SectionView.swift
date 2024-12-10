@@ -28,14 +28,28 @@ struct SectionView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 15) {
                     ForEach(items) { item in //items, id: \.self
-                        VStack {
+                        VStack(alignment: .leading)  {
                             /* Basic rectangle with the item name for now,
                              but we can replace this with an image or a custom view.
                             */
-                            Rectangle()
-                                .fill(Color.blue)
-                                .frame(width: 120, height: 120)
-                                .cornerRadius(10)
+//                            Rectangle()
+//                                .fill(Color.blue)
+//                                .frame(width: 120, height: 120)
+//                                .cornerRadius(10)
+                            
+                            if let imageUrl = item.images.first?.url {
+                                AsyncImage(url: URL(string: imageUrl)) { image in
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                } placeholder: {
+                                    Rectangle()
+                                        .foregroundColor(.gray)
+                                }
+                                .frame(width: 150, height: 150)
+                                .cornerRadius(8)
+                            }
+                            
                             Text(item.name)
                                 .font(.caption)
                                 .lineLimit(1)
