@@ -12,8 +12,12 @@ struct OutputView: View {
 
     var body: some View {
         VStack {
-            Text("Groovify Song List:")
+            Text("Songs based on your mood")
                 .foregroundColor(.white)
+                .font(.title2)
+                .fontWeight(.semibold)
+                .padding(.horizontal)
+                
 
             Text("You entered: \(initialSearchText)")
                 .foregroundColor(.white)

@@ -56,14 +56,17 @@ struct InputView: View {
 
     var emotionSearchView: some View {
         VStack {
-            Text("Emotions")
+            Text("How are you feeling today?")
                 .foregroundColor(.white)
+                .font(.title2)
+                .fontWeight(.semibold)
+                .padding(.horizontal)
 
-            HStack {
-                TextField("🤩 How are you feeling today?", text: $viewModel.searchText)
-                    .textFieldStyle(.roundedBorder)
-            }
-            .padding(.horizontal)
+//            HStack {
+//                TextField("🤩 How are you feeling today?", text: $viewModel.searchText)
+//                    .textFieldStyle(.roundedBorder)
+//            }
+//            .padding(.horizontal)
 
             ScrollView {
                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]) {
