@@ -47,7 +47,7 @@ struct PlaylistCarouselView<Item: CarouselItem>: View {
                             
                             Text(playlist.name)
                                 .font(.caption)
-                                .lineLimit(2)
+                                .lineLimit(1)
                                 .frame(width: 150)
                         }
                         // Call the onItemClick closure when tapped

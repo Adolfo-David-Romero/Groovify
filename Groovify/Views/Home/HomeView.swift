@@ -23,11 +23,10 @@ struct HomeView: View {
                 ScrollView {
                     VStack(spacing: 20) {
                         // Recent Tracks
-//                        ListView(title: "Your Recent Tracks", tracks: [homeViewModel.newReleases.name]) //"Song1", "Song2", "Song3", "Song4", "Song5"
-                        ListView(title: "Your Recent Tracks", tracks: Array(homeViewModel.newReleases.prefix(5)))
+                        ListView(title: "Your Recent Tracks", tracks: Array(homeViewModel.newReleases.shuffled().prefix(5)))
                         
                         // Top Charts Section
-                        SectionView(title: "Top Charts", items: ["Song1", "Song2", "Song3", "Song4", "Song5"])
+                        SectionView(title: "Top Charts", items: Array(homeViewModel.newReleases.shuffled().prefix(5)))
 
                         // Featured Playlists
                         PlaylistCarouselView(
@@ -54,7 +53,10 @@ struct HomeView: View {
                         }
 
                         // Genres Section
-                        SectionView(title: "Genres", items: ["Pop", "Rock", "Hip-Hop", "Jazz", "Classical"])
+//                        SectionView(title: "Genres", items: ["Pop", "Rock", "Hip-Hop", "Jazz", "Classical"])
+//                        
+                        SectionView(title: "Genres", items: Array(homeViewModel.newReleases.shuffled().prefix(5)))
+                        
                     }
                 }
 

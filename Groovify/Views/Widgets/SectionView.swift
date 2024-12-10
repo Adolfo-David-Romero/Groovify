@@ -13,7 +13,9 @@ import SwiftUI
  */
 struct SectionView: View {
     var title: String // Title of the section
-    var items: [String] // Items to display in the section
+    var items: [NewRelease] // Items to display in the section //
+    
+//    changed [String] to [NewRelease]
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -25,7 +27,7 @@ struct SectionView: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 15) {
-                    ForEach(items, id: \.self) { item in
+                    ForEach(items) { item in //items, id: \.self
                         VStack {
                             /* Basic rectangle with the item name for now,
                              but we can replace this with an image or a custom view.
@@ -34,11 +36,15 @@ struct SectionView: View {
                                 .fill(Color.blue)
                                 .frame(width: 120, height: 120)
                                 .cornerRadius(10)
-                            Text(item)
+                            Text(item.name)
                                 .font(.caption)
+                                .lineLimit(1)
+                                .frame(width: 150)
                                 .foregroundColor(.primary)
+                            
                         }
                     }
+//                    Spacer()
                 }
                 .padding(.horizontal)
             }
@@ -46,6 +52,13 @@ struct SectionView: View {
     }
 }
 
+//#Preview {
+//    SectionView(title: "Top Charts", items: ["Song1", "Song2", "Song3", "Song4", "Song5"])
+//}
 #Preview {
-    SectionView(title: "Top Charts", items: ["Song1", "Song2", "Song3", "Song4", "Song5"])
+  SectionView(title: "Top Charts", items: [
+    NewRelease(album_type: "", id: "", name: "Song 1", images: [], release_date: "", href: ""),
+    NewRelease(album_type: "", id: "", name: "Song 2", images: [], release_date: "", href: ""),
+    
+  ])
 }
