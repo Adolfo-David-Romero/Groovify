@@ -27,6 +27,7 @@ struct PlaylistCarouselView<Item: CarouselItem>: View {
                 .font(.title2)
                 .fontWeight(.bold)
                 .padding(.horizontal)
+                .foregroundColor(.white)
             
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(spacing: 20) {
@@ -49,6 +50,7 @@ struct PlaylistCarouselView<Item: CarouselItem>: View {
                                 .font(.caption)
                                 .lineLimit(1)
                                 .frame(width: 150)
+                                .foregroundColor(.white)
                         }
                         // Call the onItemClick closure when tapped
                         .onTapGesture {

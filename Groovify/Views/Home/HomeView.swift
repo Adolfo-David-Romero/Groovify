@@ -53,9 +53,9 @@ struct HomeView: View {
                         }
 
                         // Genres Section
-//                        SectionView(title: "Genres", items: ["Pop", "Rock", "Hip-Hop", "Jazz", "Classical"])
-//                        
-                        SectionView(title: "Genres", items: Array(homeViewModel.newReleases.shuffled().prefix(5)))
+                        GenreSectionView(title: "Genres", genres: ["Pop", "Rock", "Hip-Hop", "Jazz", "Classical"])
+                        
+//                        SectionView(title: "Genres", items: Array(homeViewModel.newReleases.shuffled().prefix(5)))
                         
                     }
                 }
@@ -63,6 +63,7 @@ struct HomeView: View {
                 // MiniPlayer for music player
                 MiniPlayerView()
             }
+            .background(Color(red: 10.0 / 255.0, green: 14.0 / 255.0, blue: 69.0 / 255.0))
             .onAppear {
                 homeViewModel.authenticateAndFetchData()
             }

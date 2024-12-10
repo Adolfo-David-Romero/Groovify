@@ -44,7 +44,9 @@ struct UserProfileView: View {
                                     .foregroundColor(.gray)
                             }
                         }
+                        
                     }
+                    
 
                     Section("General") {
                         HStack {
@@ -54,6 +56,7 @@ struct UserProfileView: View {
                                 .foregroundStyle(.gray)
                         }
                     }
+                   
 
                     Section("Account") {
                         Button {
@@ -83,11 +86,14 @@ struct UserProfileView: View {
                             )
                         }
                     }
+                  
                 }
-                
+              
                 .navigationTitle("Your Profile")
+                
             }
         }
+        
     }
 }
 

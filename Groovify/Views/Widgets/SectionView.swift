@@ -24,6 +24,7 @@ struct SectionView: View {
                 .font(.title2)
                 .fontWeight(.semibold)
                 .padding(.horizontal)
+                .foregroundColor(.white)
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 15) {
@@ -54,7 +55,7 @@ struct SectionView: View {
                                 .font(.caption)
                                 .lineLimit(1)
                                 .frame(width: 150)
-                                .foregroundColor(.primary)
+                                .foregroundColor(.white)
                             
                         }
                     }

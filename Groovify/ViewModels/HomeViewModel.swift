@@ -30,6 +30,13 @@ class HomeViewModel: ObservableObject {
            self.api = api
        }
     
+    func randomColor() -> Color {
+       return Color(
+         red: Double.random(in: 0...1),
+         green: Double.random(in: 0...1),
+         blue: Double.random(in: 0...1)
+       )
+     }
     
     func authenticateAndFetchData() {
         api.auth.authenticate { [weak self] result in

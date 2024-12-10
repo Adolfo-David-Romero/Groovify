@@ -22,6 +22,7 @@ protocol CarouselItem: Identifiable {
 }
 
 
+
 // MARK: - SimplifiedArtist
 struct SimplifiedArtist: Decodable, Identifiable {
     let id: String

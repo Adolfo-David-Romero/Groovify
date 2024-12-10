@@ -15,6 +15,7 @@ struct ListView: View {
                 .font(.title2)
                 .fontWeight(.semibold)
                 .padding(.horizontal)
+                .foregroundColor(.white)
             
             // Tracks list
             VStack(alignment: .leading, spacing: 10) {
@@ -32,7 +33,7 @@ struct ListView: View {
 //                            .foregroundColor(.primary)
                         Text(track.name) // Access the song name from the NewRelease object
                                .font(.body)
-                               .foregroundColor(.primary)
+                               .foregroundColor(.white)
                         
                         Spacer()
                     }

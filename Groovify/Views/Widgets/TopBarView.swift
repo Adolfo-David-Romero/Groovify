@@ -12,35 +12,39 @@ struct TopBarView: View {
     var body: some View {
         HStack {
             // Profile Icon (Placeholder)
-            VStack {
+            VStack (alignment: .leading, spacing: 4){
                 Text("Hello, \(authViewModel.currentUser?.fullname ?? "User")")
                     .font(.title2)
                     .foregroundColor(.white)
+                
                 Text("Ready to find your groove?")
                     .font(.caption)
                     .foregroundColor(.white)
+                    
 
             }
+            .frame(maxWidth: .infinity, alignment: .leading) 
             Spacer()
             Button(action: {
                 // Action for settings button,
                 // e.g., navigate to settings screen
             }) {
-                /**
-                 TODO: Replace this with a custom settings icon or image for Groovify..
-                 */
-                NavigationLink(destination: UserProfileView().environmentObject(authViewModel)){
-                    Image(systemName: "gearshape")
-                        .font(.title)
-                        .foregroundColor(.white)
-                }
+                Image("groovify_icon")
+                  .resizable()
+                  .aspectRatio(contentMode: .fit)
+                  .frame(width: 50, height: 50)
+                
+//                NavigationLink(destination: UserProfileView().environmentObject(authViewModel)){
+//                    Image(systemName: "gearshape")
+//                        .font(.title)
+//                        .foregroundColor(.white)
+//                }
             }
         }
-        // Just added simple styling, feel free to customize further, I am not really good at this/:)
         .padding()
-        .background(Color(red: 10.0/255.0, green: 14.0/255.0, blue: 69.0/255.0))
+        .background(Color(red: 48.0 / 255.0, green: 44.0 / 255.0, blue: 124.0 / 255.0))
         // Rounded corners for the top bar,
-        .cornerRadius(20)
+        .cornerRadius(10)
         
     }
 }
