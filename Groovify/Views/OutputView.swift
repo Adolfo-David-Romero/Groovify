@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-struct OutputScreen: View {
+struct OutputView: View {
     var initialSearchText: String
     var tracks: [Track] // Pass tracks to display
 
@@ -18,8 +18,10 @@ struct OutputScreen: View {
             Text("You entered: \(initialSearchText)")
                 .foregroundColor(.white)
                 .padding()
-
-            TrackListView(tracks: tracks) // Use TrackListView to display tracks
+            
+            ScrollView {
+                TrackListView(tracks: tracks) // Use TrackListView to display tracks
+            }
         }
         .padding()
         .background(Color(red: 10.0 / 255.0, green: 14.0 / 255.0, blue: 69.0 / 255.0))
@@ -27,5 +29,5 @@ struct OutputScreen: View {
 }
 
 #Preview {
-    OutputScreen(initialSearchText: "Happy", tracks: [])
+    OutputView(initialSearchText: "Happy", tracks: [])
 }
