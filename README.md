@@ -1,5 +1,8 @@
 # Groovify - Group 3
 
+## Project Proposal
+- [Proposal Document Link](https://docs.google.com/document/d/1_KD3YCtYT4ifG29AsHb0XIGxqSWaytpR1PwdOvsNQks/edit?usp=sharing)
+
 ## Table of Contents
 - [Project Overview](#project-overview)
 - [Key Features](#key-features)
