@@ -2,7 +2,7 @@
 
 ## Project Proposal
 - [Proposal Document Link](https://docs.google.com/document/d/1_KD3YCtYT4ifG29AsHb0XIGxqSWaytpR1PwdOvsNQks/edit?usp=sharing)
-- [App Demo and Slides](https://docs.google.com/presentation/d/1qYvdsmS2W75jKQCP-PhCqCluGsFO8LjzDhv3jx6HoW4/edit?usp=sharing)
+- [Slides- screenshots for various screens in app](https://docs.google.com/presentation/d/1qYvdsmS2W75jKQCP-PhCqCluGsFO8LjzDhv3jx6HoW4/edit?usp=sharing)
 
 ## Table of Contents
 - [Project Overview](#project-overview)
