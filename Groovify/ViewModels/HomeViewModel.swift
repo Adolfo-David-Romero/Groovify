@@ -23,6 +23,9 @@ class HomeViewModel: ObservableObject {
     
     @Published var selectedAlbumData: AlbumData?
     @Published var selectedPlaylistData: PlaylistTracksWrapper?
+    @Published var selectedFeaturedPlaylist: AlbumData?
+    @Published var selectedTopCharts: AlbumData?
+    
     
     let api: SpotifyAPI
 
@@ -106,6 +109,8 @@ class HomeViewModel: ObservableObject {
                 switch result {
                 case .success(let data):
                     self.selectedAlbumData = data
+                    self.selectedFeaturedPlaylist = data
+                    self.selectedTopCharts = data
                 case .failure(let error):
                     self.errorMessage = error.localizedDescription
                 }

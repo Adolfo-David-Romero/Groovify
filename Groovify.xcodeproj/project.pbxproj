@@ -91,6 +91,13 @@
 			);
 			target = BC064B092CD2D7190082B7D9 /* Groovify */;
 		};
+		0FA504A22D0906FC008EDB33 /* Exceptions for "GroovifyWidget" folder in "GroovifyWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 0FA5048C2D0906FA008EDB33 /* GroovifyWidgetExtension */;
+		};
 		0FA504A42D09087B008EDB33 /* Exceptions for "Groovify" folder in "GroovifyWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -105,6 +112,14 @@
 				Views/Widgets/ListView.swift,
 			);
 			target = 0FA5048C2D0906FA008EDB33 /* GroovifyWidgetExtension */;
+		};
+		0FA504AC2D090A46008EDB33 /* Exceptions for "GroovifyWidget" folder in "Groovify" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				AppIntent.swift,
+				GroovifyWidget.swift,
+			);
+			target = BC064B092CD2D7190082B7D9 /* Groovify */;
 		};
 		673E12C92CEE2DE70039E38D /* Exceptions for "Groovify" folder in "GroovifyTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -125,6 +140,10 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0FA504932D0906FA008EDB33 /* GroovifyWidget */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				0FA504AC2D090A46008EDB33 /* Exceptions for "GroovifyWidget" folder in "Groovify" target */,
+				0FA504A22D0906FC008EDB33 /* Exceptions for "GroovifyWidget" folder in "GroovifyWidgetExtension" target */,
+			);
 			path = GroovifyWidget;
 			sourceTree = "<group>";
 		};

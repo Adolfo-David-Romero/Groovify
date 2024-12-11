@@ -26,19 +26,43 @@ struct HomeView: View {
                         ListView(title: "Your Recent Tracks", tracks: Array(homeViewModel.newReleases.shuffled().prefix(5)))
                         
                         // Top Charts Section
-                        SectionView(title: "Top Charts", items: Array(homeViewModel.newReleases.shuffled().prefix(5)))
-
-                        // Featured Playlists
+                        // Changed to PlaylistCarouselView
+                        // SectionView(title: "Top Charts", items: Array(homeViewModel.newReleases.shuffled().prefix(5)))
+                        
                         PlaylistCarouselView(
-                            playlists: homeViewModel.playlists,
-                            title: "Featured Playlists",
-                            onItemClick: { playlist in
-                                homeViewModel.loadPlaylistTracks(for: playlist)
+                            playlists: homeViewModel.newReleases.shuffled(),
+                            title: "Top Charts",
+                            onItemClick: { newRelease in
+                                homeViewModel.loadAlbumData(for: newRelease.href)
                             }
                         )
-                        .navigationDestination(item: $homeViewModel.selectedPlaylistData) { playlistTracks in
-                            PlaylistView(playlists: playlistTracks)
+                        .navigationDestination(item: $homeViewModel.selectedTopCharts) { albumData in
+                            AlbumView(albumData: albumData)
                         }
+                        
+                        PlaylistCarouselView(
+                            playlists: homeViewModel.newReleases.shuffled(),
+                            title: "Featured Playlists",
+                            onItemClick: { newRelease in
+                                homeViewModel.loadAlbumData(for: newRelease.href)
+                            }
+                        )
+                        .navigationDestination(item: $homeViewModel.selectedFeaturedPlaylist) { albumData in
+                            AlbumView(albumData: albumData)
+                        }
+                        
+                        // Deprecated by Spotify API
+                        // Featured Playlists
+//                        PlaylistCarouselView(
+//                            playlists: homeViewModel.playlists,
+//                            title: "Featured Playlists",
+//                            onItemClick: { playlist in
+//                                homeViewModel.loadPlaylistTracks(for: playlist)
+//                            }
+//                        )
+//                        .navigationDestination(item: $homeViewModel.selectedPlaylistData) { playlistTracks in
+//                            PlaylistView(playlists: playlistTracks)
+//                        }
 
                         // New Releases
                         PlaylistCarouselView(

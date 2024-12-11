@@ -18,7 +18,7 @@ struct MainTabView: View {
     @StateObject var musicPlayerManager = MusicPlayerManager()
     
     //tab flags
-    @State private var selectedTab: Tab = .input //always starts at input view
+    @State private var selectedTab: Tab = .home //always starts at input view
     @State private var showMenu: Bool = false // Manage MenuView visibility
     
     var body: some View {
