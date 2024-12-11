@@ -95,17 +95,26 @@ struct GroovifyWidgetEntryView: View {
                 }
                 
                 HStack(spacing: 10) {
-                    if let imageUrl = entry.imageUrl {
-                        AsyncImage(url: URL(string: imageUrl)) { image in
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                        } placeholder: {
-                            Rectangle()
-                                .foregroundColor(.gray)
-                        }
-                        .frame(width: imageSize, height: imageSize)
-                        .cornerRadius(8)
+//                    if let imageUrl = entry.imageUrl {
+//                        AsyncImage(url: URL(string: imageUrl)) { image in
+//                            image
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fill)
+//                        } placeholder: {
+//                            Rectangle()
+//                                .foregroundColor(.gray)
+//                        }
+//                        .frame(width: imageSize, height: imageSize)
+//                        .cornerRadius(8)
+//                    }
+                    if let iconURL = entry.imageUrl,
+                       let url = URL(string: iconURL),
+                       let data = try? Data(contentsOf: url),
+                       let image = UIImage(data: data) {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 30, height: 30)
                     }
                     
                     Text(entry.track)
@@ -115,8 +124,8 @@ struct GroovifyWidgetEntryView: View {
                         .minimumScaleFactor(0.8)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                Text("url: \(entry.imageUrl)")
-                    .foregroundColor(.white)
+//                Text("url: \(entry.imageUrl)")
+//                    .foregroundColor(.white)
                 
             }
             .padding(padding)
