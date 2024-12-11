@@ -15,17 +15,24 @@ struct EventView: View {
     @State private var errorMessage: String?
 
     var body: some View {
-        NavigationView {
-            VStack(alignment: .leading) {
-                Text("Nearby Music Events")
-                    .font(.headline)
-                    .padding(.horizontal)
-
+        VStack(alignment: .leading, spacing: 10) {
+            ScrollView{
+                HStack {
+                    Text("Nearby Music Events")
+                        .font(.headline)
+                    Spacer()
+                    if isLoading {
+                        ProgressView()
+                    }
+                }
+                .padding(.horizontal)
+                
                 if let locationError = locationManager.locationError {
                     VStack {
                         Text(locationError)
+                            .font(.subheadline)
                             .foregroundColor(.red)
-                            .padding()
+                            .multilineTextAlignment(.center)
                         Button(action: retryFetchingEvents) {
                             Text("Retry")
                                 .foregroundColor(.white)
@@ -34,14 +41,13 @@ struct EventView: View {
                                 .cornerRadius(8)
                         }
                     }
-                } else if isLoading {
-                    ProgressView("Loading events...")
-                        .padding()
+                    .padding()
                 } else if let errorMessage = errorMessage {
                     VStack {
                         Text("Error: \(errorMessage)")
+                            .font(.subheadline)
                             .foregroundColor(.red)
-                            .padding()
+                            .multilineTextAlignment(.center)
                         Button(action: retryFetchingEvents) {
                             Text("Retry")
                                 .foregroundColor(.white)
@@ -50,10 +56,12 @@ struct EventView: View {
                                 .cornerRadius(8)
                         }
                     }
+                    .padding()
                 } else if events.isEmpty {
                     Text("No events found nearby.")
                         .font(.subheadline)
                         .foregroundColor(.gray)
+                        .multilineTextAlignment(.center)
                         .padding()
                 } else {
                     ScrollView {
@@ -62,6 +70,8 @@ struct EventView: View {
                                 VStack(alignment: .leading) {
                                     Text(event.name.isEmpty ? "Unknown Event" : event.name)
                                         .font(.headline)
+                                        .lineLimit(1)
+                                        .truncationMode(.tail)
                                     Text(event.venueName.isEmpty ? "Unknown Venue" : event.venueName)
                                         .font(.subheadline)
                                         .foregroundColor(.gray)
@@ -69,22 +79,21 @@ struct EventView: View {
                                         .font(.footnote)
                                         .foregroundColor(.gray)
                                 }
-                                .padding(.horizontal)
-                                .padding(.vertical, 5)
                                 Divider()
                             }
                         }
-                    }
-                    .refreshable {
-                        fetchEvents()
+                        .padding(.horizontal)
                     }
                 }
             }
-            .onAppear(perform: fetchEvents)
-            .navigationBarTitle("Events", displayMode: .inline)
-            .frame(maxWidth: .infinity)
-            .padding()
         }
+        .onAppear(perform: fetchEvents)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color(UIColor.systemGray6))
+        )
+        .padding()
+        .frame(width: 300) // Adjusted width for smaller rectangle
     }
 
     func fetchEvents() {
@@ -120,7 +129,6 @@ struct EventView: View {
             }
         }
     }
-
 
     func retryFetchingEvents() {
         isLoading = true
