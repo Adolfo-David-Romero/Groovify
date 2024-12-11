@@ -115,6 +115,9 @@ struct GroovifyWidgetEntryView: View {
                         .minimumScaleFactor(0.8)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
+                Text("url: \(entry.imageUrl)")
+                    .foregroundColor(.white)
+                
             }
             .padding(padding)
         }
@@ -274,6 +277,7 @@ struct TrackProvider: TimelineProvider {
             let track = homeViewModel.newReleases[minuteOffset % homeViewModel.newReleases.count]
             let trackName = track.name
             let imageUrl = track.images.first?.url // Assuming images is an array with a url property
+            print(imageUrl)
             
             entries.append(TrackEntry(date: entryDate, track: trackName, imageUrl: imageUrl))
         }
