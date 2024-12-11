@@ -29,23 +29,26 @@ class NotificationManager {
         }
     }
     
-    ///UserNotifications framework to schedule local notifications
-    func scheduleLocalNotification() {
+    /// Schedule a local notification for a new concert
+    func scheduleNotification(for concertName: String, date: String, venue: String) {
         let content = UNMutableNotificationContent()
-        content.title = "Concert Reminder"
-        content.body = "Don't forget about the upcoming concert tonight!"
+        content.title = "New Concert Nearby!"
+        content.body = "Don't miss \(concertName) at \(venue) on \(date)."
         content.sound = .default
         
-        // Set a trigger (e.g., after 5 seconds)
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        // Set the trigger to fire immediately
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
         
-        // Create a request
-        let request = UNNotificationRequest(identifier: "concertReminder", content: content, trigger: trigger)
+        // Create a unique identifier for each notification
+        let identifier = "concert_\(concertName)_\(date)".replacingOccurrences(of: " ", with: "_")
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
         
         // Add the notification request
         UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
                 print("Error scheduling notification: \(error.localizedDescription)")
+            } else {
+                print("Notification scheduled for concert: \(concertName)")
             }
         }
     }
