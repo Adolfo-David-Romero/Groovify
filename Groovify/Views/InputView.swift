@@ -104,11 +104,7 @@ struct InputView: View {
             }
             .disabled(viewModel.selectedEmotions.isEmpty || viewModel.isLoading)
 
-            if let errorMessage = viewModel.errorMessage {
-                Text(errorMessage)
-                    .foregroundColor(.red)
-                    .padding()
-            }
+
         }
     }
 
