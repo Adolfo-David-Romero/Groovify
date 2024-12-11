@@ -18,25 +18,25 @@ struct TrackEntry: TimelineEntry {
 // SwiftUI view for displaying the widget content
 //struct GroovifyWidgetEntryView: View {
 //    var entry: TrackEntry
-//    
+//
 //    var body: some View {
 //        ZStack {
 //            Color(red: 10.0 / 255.0, green: 14.0 / 255.0, blue: 69.0 / 255.0)
 //                .ignoresSafeArea()
-//            
+//
 //            VStack(alignment: .leading, spacing: 8) {
 //                HStack{
 //                    Image(systemName: "music.note")
 //                        .foregroundColor(.blue)
 //                        .font(.title2)
-//                    
-//                    
+//
+//
 //                    Text("Now Playing")
 //                        .font(.caption)
 //                        .foregroundColor(.gray)
 //                }
-//                
-//                
+//
+//
 //                HStack(spacing: 10) {
 //                    // Image rendering logic similar to PlaylistCarouselView
 //                    VStack{
@@ -60,10 +60,10 @@ struct TrackEntry: TimelineEntry {
 //                        .minimumScaleFactor(0.8)
 //                        .frame(maxWidth: .infinity, alignment: .leading)
 //                }
-//                
-//                
-//                
-//                
+//
+//
+//
+//
 //            }
 //            .padding()
 //        }
@@ -95,17 +95,26 @@ struct GroovifyWidgetEntryView: View {
                 }
                 
                 HStack(spacing: 10) {
-                    if let imageUrl = entry.imageUrl {
-                        AsyncImage(url: URL(string: imageUrl)) { image in
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                        } placeholder: {
-                            Rectangle()
-                                .foregroundColor(.gray)
-                        }
-                        .frame(width: imageSize, height: imageSize)
-                        .cornerRadius(8)
+//                    if let imageUrl = entry.imageUrl {
+//                        AsyncImage(url: URL(string: imageUrl)) { image in
+//                            image
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fill)
+//                        } placeholder: {
+//                            Rectangle()
+//                                .foregroundColor(.gray)
+//                        }
+//                        .frame(width: imageSize, height: imageSize)
+//                        .cornerRadius(8)
+//                    }
+                    if let iconURL = entry.imageUrl,
+                       let url = URL(string: iconURL),
+                       let data = try? Data(contentsOf: url),
+                       let image = UIImage(data: data) {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 30, height: 30)
                     }
                     
                     Text(entry.track)
@@ -115,8 +124,8 @@ struct GroovifyWidgetEntryView: View {
                         .minimumScaleFactor(0.8)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                Text("url: \(entry.imageUrl)")
-                    .foregroundColor(.white)
+//                Text("url: \(entry.imageUrl)")
+//                    .foregroundColor(.white)
                 
             }
             .padding(padding)
@@ -198,38 +207,38 @@ struct GroovifyWidgetEntryView: View {
 // Timeline provider to fetch and update data
 //struct TrackProvider: TimelineProvider {
 //    var homeViewModel = HomeViewModel(api: SpotifyAPI.shared)
-//    
+//
 //    func placeholder(in context: Context) -> TrackEntry {
 //        TrackEntry(date: Date(), track: "Loading...")
 //    }
-//    
+//
 //    func getSnapshot(in context: Context, completion: @escaping (TrackEntry) -> Void) {
 //        // Call fetch method synchronously for snapshot
 //        homeViewModel.authenticateAndFetchData()
 //        let trackName = homeViewModel.newReleases.first?.name ?? "Sample Track"
 //        completion(TrackEntry(date: Date(), track: trackName))
 //    }
-//    
+//
 //    func getTimeline(in context: Context, completion: @escaping (Timeline<TrackEntry>) -> Void) {
 //        homeViewModel.authenticateAndFetchData()
-//        
+//
 //        guard !homeViewModel.newReleases.isEmpty else {
 //            let placeholderEntry = TrackEntry(date: Date(), track: "No Tracks Available")
 //            let timeline = Timeline(entries: [placeholderEntry], policy: .atEnd)
 //            completion(timeline)
 //            return
 //        }
-//        
+//
 //        var entries: [TrackEntry] = []
 //        let currentDate = Date()
-//        
+//
 //        // Generate entries for the next 5 minutes
 //        for minuteOffset in 0..<5 {
 //            guard let entryDate = Calendar.current.date(byAdding: .minute, value: minuteOffset, to: currentDate) else { continue }
 //            let trackName = homeViewModel.newReleases[minuteOffset % homeViewModel.newReleases.count].name
 //            entries.append(TrackEntry(date: entryDate, track: trackName))
 //        }
-//        
+//
 //        let timeline = Timeline(entries: entries, policy: .atEnd)
 //        completion(timeline)
 //    }
