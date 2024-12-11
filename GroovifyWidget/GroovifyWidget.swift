@@ -8,150 +8,96 @@
 import WidgetKit
 import SwiftUI
 
-//model
-
+// Model for the timeline entry
 struct TrackEntry: TimelineEntry {
     let date: Date
     let track: String
 }
 
-//swift ui view
-
-struct GroovifyWidgetEntryView : View {
-  
-    var homeViewModel = HomeViewModel(api: SpotifyAPI.shared)
-//    @EnvironmentObject var homeViewModel: HomeViewModel
+// SwiftUI view for displaying the widget content
+struct GroovifyWidgetEntryView: View {
     var entry: TrackEntry
 
     var body: some View {
-        ZStack{
+        ZStack {
             Color(red: 10.0 / 255.0, green: 14.0 / 255.0, blue: 69.0 / 255.0)
-            VStack {
-                // Recent Tracks
-                ListView(title: "Your Recent Tracks", tracks: Array(homeViewModel.newReleases.shuffled().prefix(1)))
+                .ignoresSafeArea()
+
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Now Playing")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+
+                Text(entry.track)
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
             }
             .padding()
         }
-       // .background(Color(red: 10.0 / 255.0, green: 14.0 / 255.0, blue: 69.0 / 255.0))
-        .cornerRadius(20)
+        .cornerRadius(15)
     }
 }
 
-
-//test ui
-//struct GroovifyWidgetEntryView: View {
-//    var entry: TrackEntry
-//
-//    var body: some View {
-//        
-//        ZStack{
-//            Color(red: 10.0 / 255.0, green: 14.0 / 255.0, blue: 69.0 / 255.0)
-//            VStack(alignment: .leading) {
-//                Text("Recent Tracks")
-//                    .font(.caption)
-//                    .foregroundColor(.gray)
-//                    .padding(.horizontal)
-//
-//                Text(entry.track)
-//                    .foregroundColor(.white)
-//                    .padding(.horizontal)
-//            }
-//            .padding()
-//        }
-//        
-//       // .background(Color(red: 10.0 / 255.0, green: 14.0 / 255.0, blue: 69.0 / 255.0))
-//        .cornerRadius(20)
-//    }
-//}
-//timeline provider
-
-struct TrackProvider  : TimelineProvider {
+// Timeline provider to fetch and update data
+struct TrackProvider: TimelineProvider {
     var homeViewModel = HomeViewModel(api: SpotifyAPI.shared)
-//    @EnvironmentObject var homeViewModel: HomeViewModel
-    
+
     func placeholder(in context: Context) -> TrackEntry {
-        
-        TrackEntry(date: Date(), track: "Song 1")
-        }
-    
-    
-    func getSnapshot(in context: Context, completion: @escaping (TrackEntry) -> Void) {
-        
-        completion(TrackEntry(date: Date(), track: "Song 2"))
+        TrackEntry(date: Date(), track: "Loading...")
     }
-    
-    
+
+    func getSnapshot(in context: Context, completion: @escaping (TrackEntry) -> Void) {
+        // Call fetch method synchronously for snapshot
+        homeViewModel.authenticateAndFetchData()
+        let trackName = homeViewModel.newReleases.first?.name ?? "Sample Track"
+        completion(TrackEntry(date: Date(), track: trackName))
+    }
+
     func getTimeline(in context: Context, completion: @escaping (Timeline<TrackEntry>) -> Void) {
-        
-        var entries : [TrackEntry] = []
-        
-        
-        for minuteOffset in 0..<1 {
-            let entryDate = Calendar.current.date(byAdding: .minute, value: minuteOffset, to: Date())
-            let entry = TrackEntry(date: entryDate!, track: homeViewModel.newReleases.randomElement()?.name ?? "No Songs")
-            entries.append(entry)
+        homeViewModel.authenticateAndFetchData()
+
+        guard !homeViewModel.newReleases.isEmpty else {
+            let placeholderEntry = TrackEntry(date: Date(), track: "No Tracks Available")
+            let timeline = Timeline(entries: [placeholderEntry], policy: .atEnd)
+            completion(timeline)
+            return
         }
-        
+
+        var entries: [TrackEntry] = []
+        let currentDate = Date()
+
+        // Generate entries for the next 5 minutes
+        for minuteOffset in 0..<5 {
+            guard let entryDate = Calendar.current.date(byAdding: .minute, value: minuteOffset, to: currentDate) else { continue }
+            let trackName = homeViewModel.newReleases[minuteOffset % homeViewModel.newReleases.count].name
+            entries.append(TrackEntry(date: entryDate, track: trackName))
+        }
+
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
     }
 }
-// Timeline Provider
 
-//struct TrackProvider: TimelineProvider {
-//    
-//    // Dummy data (replace with actual API calls in a real scenario)
-//    let dummyTracks = ["Song 1", "Song 2", "Song 3", "Song 4", "Song 5"]
-//
-//    func placeholder(in context: Context) -> TrackEntry {
-//        TrackEntry(date: Date(), track: "Song 1")
-//    }
-//
-//    func getSnapshot(in context: Context, completion: @escaping (TrackEntry) -> Void) {
-//        completion(TrackEntry(date: Date(), track: "Song 2"))
-//    }
-//
-//    func getTimeline(in context: Context, completion: @escaping (Timeline<TrackEntry>) -> Void) {
-//        var entries: [TrackEntry] = []
-//
-//        for minuteOffset in 0..<1 {
-//            let entryDate = Calendar.current.date(byAdding: .minute, value: minuteOffset, to: Date())!
-//            let randomIndex = Int.random(in: 0..<dummyTracks.count)
-//            let track = dummyTracks[randomIndex]
-//            let entry = TrackEntry(date: entryDate, track: track)
-//            entries.append(entry)
-//        }
-//
-//        let timeline = Timeline(entries: entries, policy: .atEnd)
-//        completion(timeline)
-//    }
-//}
-
-
-//configure widget
-
+// Widget configuration
 struct GroovifyWidget: Widget {
-    let kind = "GroovifyWidget"
+    let kind: String = "GroovifyWidget"
 
-    var body : some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: TrackProvider()){ entry in
-            GroovifyWidgetEntryView(homeViewModel: TrackProvider().homeViewModel, entry: entry)
-        }.configurationDisplayName("Songs")
-            .description("Get new song every minute")
-            .supportedFamilies([.systemSmall ,.systemMedium ,.systemLarge])
-        
-        
+    var body: some WidgetConfiguration {
+        StaticConfiguration(kind: kind, provider: TrackProvider()) { entry in
+            GroovifyWidgetEntryView(entry: entry)
+        }
+        .configurationDisplayName("Groovify")
+        .description("Displays your recent tracks.")
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     }
 }
 
-
-//#Preview(as: .systemSmall) {
-//  GroovifyWidget()
-//    .timeline(
-//      entries: [
-//        TrackEntry(date: Date(), track: "Song 1"),
-//        TrackEntry(date: Date().addingTimeInterval(60), track: "Song 2") // Simulate future entry
-//      ],
-//      policy: .atEnd
-//    )
-//}
+// Preview for the widget
+struct GroovifyWidget_Previews: PreviewProvider {
+    static var previews: some View {
+        GroovifyWidgetEntryView(entry: TrackEntry(date: Date(), track: "Sample Track"))
+            .previewContext(WidgetPreviewContext(family: .systemSmall))
+    }
+}
