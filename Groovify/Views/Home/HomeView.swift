@@ -22,6 +22,7 @@ struct HomeView: View {
 
                 ScrollView {
                     VStack(spacing: 20) {
+                        EventView().padding()
                         // Recent Tracks
                         ListView(title: "Your Recent Tracks", tracks: Array(homeViewModel.newReleases.shuffled().prefix(5)))
                         

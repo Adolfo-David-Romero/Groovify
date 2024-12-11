@@ -26,6 +26,9 @@ struct GroovifyApp: App {
         
         _authViewModel = StateObject(wrappedValue: AuthViewModel())//Auth
         _homeViewModel = StateObject(wrappedValue: HomeViewModel(api: SpotifyAPI.shared))//Home
+        
+        // MARK: - Notifications
+            NotificationManager.shared.requestPermission()
     }
 
     var body: some Scene {

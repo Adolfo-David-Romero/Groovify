@@ -55,6 +55,9 @@ struct UserProfileView: View {
                             Text("v1.0.0 - Alpha")
                                 .foregroundStyle(.gray)
                         }
+                        NavigationLink(destination: EventView()){
+                            Text("Test")
+                        }
                     }
                    
 
