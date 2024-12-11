@@ -38,6 +38,7 @@ struct AlbumView: View {
                     Text(albumData.name)
                         .font(.title)
                         .bold()
+                        .foregroundStyle(.white)
                     
                     Text(albumData.artists.map { $0.name }.joined(separator: ", "))
                         .font(.subheadline)
@@ -53,5 +54,7 @@ struct AlbumView: View {
                 TrackListView(tracks: albumData.tracks.items)
             }
         }
+        .background(Color(red: 10.0 / 255.0, green: 14.0 / 255.0, blue: 69.0 / 255.0))
+
     }
 }
