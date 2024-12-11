@@ -19,8 +19,8 @@ struct TrackEntry: TimelineEntry {
 
 struct GroovifyWidgetEntryView : View {
   
-    var homeViewModel = HomeViewModel(api: SpotifyAPI.shared)
-    
+//    var homeViewModel = HomeViewModel(api: SpotifyAPI.shared)
+    let homeViewModel: HomeViewModel
     var entry: TrackEntry
 
     var body: some View {
@@ -28,7 +28,7 @@ struct GroovifyWidgetEntryView : View {
             Color(red: 10.0 / 255.0, green: 14.0 / 255.0, blue: 69.0 / 255.0)
             VStack {
                 // Recent Tracks
-                ListView(title: "Your Recent Tracks", tracks: Array(homeViewModel.newReleases.shuffled().prefix(5)))
+                ListView(title: "Your Recent Tracks", tracks: Array(homeViewModel.newReleases.shuffled().prefix(1)))
             }
             .padding()
         }
@@ -67,6 +67,7 @@ struct GroovifyWidgetEntryView : View {
 
 struct TrackProvider  : TimelineProvider {
     var homeViewModel = HomeViewModel(api: SpotifyAPI.shared)
+//    @EnvironmentObject var homeViewModel: HomeViewModel
     
     func placeholder(in context: Context) -> TrackEntry {
         
@@ -134,7 +135,7 @@ struct GroovifyWidget: Widget {
 
     var body : some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: TrackProvider()){ entry in
-            GroovifyWidgetEntryView(entry:  entry)
+            GroovifyWidgetEntryView(homeViewModel: TrackProvider().homeViewModel, entry: entry)
         }.configurationDisplayName("Songs")
             .description("Get new song every minute")
             .supportedFamilies([.systemSmall ,.systemMedium ,.systemLarge])
