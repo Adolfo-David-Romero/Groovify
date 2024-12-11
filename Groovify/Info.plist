@@ -17,9 +17,5 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSExtension</key>
-	<string>$(MARKETING_VERSION)</string>
-	<key>NSExtensionPointIdentifier</key>
-	<string>$(MARKETING_VERSION)</string>
 </dict>
 </plist>
