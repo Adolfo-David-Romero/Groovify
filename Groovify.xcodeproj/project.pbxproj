@@ -101,6 +101,7 @@
 		0FA504A42D09087B008EDB33 /* Exceptions for "Groovify" folder in "GroovifyWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Assets.xcassets,
 				Models/HomePageRecommendations/AlbumData.swift,
 				Models/HomePageRecommendations/CommonModels.swift,
 				Models/HomePageRecommendations/FeaturedPlaylists.swift,
@@ -694,7 +695,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Groovify/Preview Content\"";
-				DEVELOPMENT_TEAM = HB3XP4BKLJ;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Groovify/Info.plist;
@@ -725,7 +726,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Groovify/Preview Content\"";
-				DEVELOPMENT_TEAM = HB3XP4BKLJ;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Groovify/Info.plist;
