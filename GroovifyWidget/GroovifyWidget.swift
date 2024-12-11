@@ -19,8 +19,8 @@ struct TrackEntry: TimelineEntry {
 
 struct GroovifyWidgetEntryView : View {
   
-//    var homeViewModel = HomeViewModel(api: SpotifyAPI.shared)
-    let homeViewModel: HomeViewModel
+    var homeViewModel = HomeViewModel(api: SpotifyAPI.shared)
+//    @EnvironmentObject var homeViewModel: HomeViewModel
     var entry: TrackEntry
 
     var body: some View {
