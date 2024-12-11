@@ -26,7 +26,8 @@ struct HomeView: View {
                         ListView(title: "Your Recent Tracks", tracks: Array(homeViewModel.newReleases.shuffled().prefix(5)))
                         
                         // Top Charts Section
-//                        SectionView(title: "Top Charts", items: Array(homeViewModel.newReleases.shuffled().prefix(5)))
+                        // Changed to PlaylistCarouselView
+                        // SectionView(title: "Top Charts", items: Array(homeViewModel.newReleases.shuffled().prefix(5)))
                         
                         PlaylistCarouselView(
                             playlists: homeViewModel.newReleases.shuffled(),
