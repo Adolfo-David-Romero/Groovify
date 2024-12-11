@@ -16,116 +16,115 @@ struct TrackEntry: TimelineEntry {
 }
 
 //swift ui view
-//
-//struct GroovifyWidgetEntryView : View {
-//  
-////    var homeViewModel = HomeViewModel(api: SpotifyAPI.shared)
-//    
-//    var entry: TrackEntry
-//
-//    var body: some View {
-////        VStack {
-////            // Recent Tracks
-////            ListView(title: "Your Recent Tracks", tracks: Array(homeViewModel.newReleases.shuffled().prefix(5)))
-////        }
-////        .background(Color(red: 10.0 / 255.0, green: 14.0 / 255.0, blue: 69.0 / 255.0))
-////        .cornerRadius(10)
-//        
-//        VStack {
-//                 // Recent Tracks
-//            GenreSectionView(title: "Your Recent Tracks", genres: ["Song 1", "Song 2", "Song 3", "Song 4", "Song 5"])
-//             }
-//             .background(Color(red: 10.0 / 255.0, green: 14.0 / 255.0, blue: 69.0 / 255.0))
-//             .cornerRadius(10)
-//    }
-//}
 
-struct GroovifyWidgetEntryView: View {
+struct GroovifyWidgetEntryView : View {
+  
+    var homeViewModel = HomeViewModel(api: SpotifyAPI.shared)
+    
     var entry: TrackEntry
 
     var body: some View {
-        
         ZStack{
             Color(red: 10.0 / 255.0, green: 14.0 / 255.0, blue: 69.0 / 255.0)
-            VStack(alignment: .leading) {
-                Text("Recent Tracks")
-                    .font(.caption)
-                    .foregroundColor(.gray)
-                    .padding(.horizontal)
-
-                Text(entry.track)
-                    .foregroundColor(.white)
-                    .padding(.horizontal)
+            VStack {
+                // Recent Tracks
+                ListView(title: "Your Recent Tracks", tracks: Array(homeViewModel.newReleases.shuffled().prefix(5)))
             }
             .padding()
         }
-        
        // .background(Color(red: 10.0 / 255.0, green: 14.0 / 255.0, blue: 69.0 / 255.0))
         .cornerRadius(20)
     }
 }
-//timeline provider
+
+
+//test ui
+//struct GroovifyWidgetEntryView: View {
+//    var entry: TrackEntry
 //
-//struct TrackProvider  : TimelineProvider {
-//    var homeViewModel = HomeViewModel(api: SpotifyAPI.shared)
-//    
-//    func placeholder(in context: Context) -> TrackEntry {
+//    var body: some View {
 //        
-//        TrackEntry(date: Date(), track: "Song 1")
-//        }
-//    
-//    
-//    func getSnapshot(in context: Context, completion: @escaping (TrackEntry) -> Void) {
-//        
-//        completion(TrackEntry(date: Date(), track: "Song 2"))
-//    }
-//    
-//    
-//    func getTimeline(in context: Context, completion: @escaping (Timeline<TrackEntry>) -> Void) {
-//        
-//        var entries : [TrackEntry] = []
-//        
-//        
-//        for minuteOffset in 0..<1 {
-//            let entryDate = Calendar.current.date(byAdding: .minute, value: minuteOffset, to: Date())
-//            let entry = TrackEntry(date: entryDate!, track: homeViewModel.newReleases.randomElement()?.name ?? "No Songs")
-//            entries.append(entry)
+//        ZStack{
+//            Color(red: 10.0 / 255.0, green: 14.0 / 255.0, blue: 69.0 / 255.0)
+//            VStack(alignment: .leading) {
+//                Text("Recent Tracks")
+//                    .font(.caption)
+//                    .foregroundColor(.gray)
+//                    .padding(.horizontal)
+//
+//                Text(entry.track)
+//                    .foregroundColor(.white)
+//                    .padding(.horizontal)
+//            }
+//            .padding()
 //        }
 //        
-//        let timeline = Timeline(entries: entries, policy: .atEnd)
-//        completion(timeline)
+//       // .background(Color(red: 10.0 / 255.0, green: 14.0 / 255.0, blue: 69.0 / 255.0))
+//        .cornerRadius(20)
 //    }
 //}
-// Timeline Provider
+//timeline provider
 
-struct TrackProvider: TimelineProvider {
+struct TrackProvider  : TimelineProvider {
+    var homeViewModel = HomeViewModel(api: SpotifyAPI.shared)
     
-    // Dummy data (replace with actual API calls in a real scenario)
-    let dummyTracks = ["Song 1", "Song 2", "Song 3", "Song 4", "Song 5"]
-
     func placeholder(in context: Context) -> TrackEntry {
+        
         TrackEntry(date: Date(), track: "Song 1")
-    }
-
+        }
+    
+    
     func getSnapshot(in context: Context, completion: @escaping (TrackEntry) -> Void) {
+        
         completion(TrackEntry(date: Date(), track: "Song 2"))
     }
-
+    
+    
     func getTimeline(in context: Context, completion: @escaping (Timeline<TrackEntry>) -> Void) {
-        var entries: [TrackEntry] = []
-
+        
+        var entries : [TrackEntry] = []
+        
+        
         for minuteOffset in 0..<1 {
-            let entryDate = Calendar.current.date(byAdding: .minute, value: minuteOffset, to: Date())!
-            let randomIndex = Int.random(in: 0..<dummyTracks.count)
-            let track = dummyTracks[randomIndex]
-            let entry = TrackEntry(date: entryDate, track: track)
+            let entryDate = Calendar.current.date(byAdding: .minute, value: minuteOffset, to: Date())
+            let entry = TrackEntry(date: entryDate!, track: homeViewModel.newReleases.randomElement()?.name ?? "No Songs")
             entries.append(entry)
         }
-
+        
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
     }
 }
+// Timeline Provider
+
+//struct TrackProvider: TimelineProvider {
+//    
+//    // Dummy data (replace with actual API calls in a real scenario)
+//    let dummyTracks = ["Song 1", "Song 2", "Song 3", "Song 4", "Song 5"]
+//
+//    func placeholder(in context: Context) -> TrackEntry {
+//        TrackEntry(date: Date(), track: "Song 1")
+//    }
+//
+//    func getSnapshot(in context: Context, completion: @escaping (TrackEntry) -> Void) {
+//        completion(TrackEntry(date: Date(), track: "Song 2"))
+//    }
+//
+//    func getTimeline(in context: Context, completion: @escaping (Timeline<TrackEntry>) -> Void) {
+//        var entries: [TrackEntry] = []
+//
+//        for minuteOffset in 0..<1 {
+//            let entryDate = Calendar.current.date(byAdding: .minute, value: minuteOffset, to: Date())!
+//            let randomIndex = Int.random(in: 0..<dummyTracks.count)
+//            let track = dummyTracks[randomIndex]
+//            let entry = TrackEntry(date: entryDate, track: track)
+//            entries.append(entry)
+//        }
+//
+//        let timeline = Timeline(entries: entries, policy: .atEnd)
+//        completion(timeline)
+//    }
+//}
 
 
 //configure widget
