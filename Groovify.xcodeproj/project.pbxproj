@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0FA504902D0906FA008EDB33 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FA5048F2D0906FA008EDB33 /* WidgetKit.framework */; };
+		0FA504922D0906FA008EDB33 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FA504912D0906FA008EDB33 /* SwiftUI.framework */; };
+		0FA5049D2D0906FC008EDB33 /* GroovifyWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 0FA5048D2D0906FA008EDB33 /* GroovifyWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		672562BE2CE334F00002C571 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 672562BD2CE334F00002C571 /* FirebaseAnalytics */; };
 		672562C02CE334F00002C571 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 672562BF2CE334F00002C571 /* FirebaseAnalyticsOnDeviceConversion */; };
 		672562C22CE334F00002C571 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 672562C12CE334F00002C571 /* FirebaseAnalyticsWithoutAdIdSupport */; };
@@ -34,6 +37,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		0FA5049B2D0906FC008EDB33 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC064B022CD2D7190082B7D9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0FA5048C2D0906FA008EDB33;
+			remoteInfo = GroovifyWidgetExtension;
+		};
 		BC064B202CD2D71E0082B7D9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BC064B022CD2D7190082B7D9 /* Project object */;
@@ -50,7 +60,24 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		0FA5049E2D0906FC008EDB33 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				0FA5049D2D0906FC008EDB33 /* GroovifyWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		0FA5048D2D0906FA008EDB33 /* GroovifyWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = GroovifyWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		0FA5048F2D0906FA008EDB33 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		0FA504912D0906FA008EDB33 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		BC064B0A2CD2D7190082B7D9 /* Groovify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Groovify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC064B1F2CD2D71E0082B7D9 /* GroovifyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GroovifyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC064B292CD2D71E0082B7D9 /* GroovifyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GroovifyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -63,6 +90,21 @@
 				Info.plist,
 			);
 			target = BC064B092CD2D7190082B7D9 /* Groovify */;
+		};
+		0FA504A42D09087B008EDB33 /* Exceptions for "Groovify" folder in "GroovifyWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Models/HomePageRecommendations/AlbumData.swift,
+				Models/HomePageRecommendations/CommonModels.swift,
+				Models/HomePageRecommendations/FeaturedPlaylists.swift,
+				Models/HomePageRecommendations/NewReleases.swift,
+				Models/SpotifyAPI/SpotifyAPIService.swift,
+				Models/SpotifyAPI/SpotifyAuth.swift,
+				ViewModels/HomeViewModel.swift,
+				Views/Widgets/GenreSectionView.swift,
+				Views/Widgets/ListView.swift,
+			);
+			target = 0FA5048C2D0906FA008EDB33 /* GroovifyWidgetExtension */;
 		};
 		673E12C92CEE2DE70039E38D /* Exceptions for "Groovify" folder in "GroovifyTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -81,12 +123,18 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		0FA504932D0906FA008EDB33 /* GroovifyWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = GroovifyWidget;
+			sourceTree = "<group>";
+		};
 		BC064B0C2CD2D7190082B7D9 /* Groovify */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				0C3835002D07AFB200C72DAF /* Exceptions for "Groovify" folder in "Groovify" target */,
 				673E12C92CEE2DE70039E38D /* Exceptions for "Groovify" folder in "GroovifyTests" target */,
 				673E12CA2CEE2DE70039E38D /* Exceptions for "Groovify" folder in "GroovifyUITests" target */,
+				0FA504A42D09087B008EDB33 /* Exceptions for "Groovify" folder in "GroovifyWidgetExtension" target */,
 			);
 			path = Groovify;
 			sourceTree = "<group>";
@@ -104,6 +152,15 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		0FA5048A2D0906FA008EDB33 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0FA504922D0906FA008EDB33 /* SwiftUI.framework in Frameworks */,
+				0FA504902D0906FA008EDB33 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BC064B072CD2D7190082B7D9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -152,12 +209,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0FA5048E2D0906FA008EDB33 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0FA5048F2D0906FA008EDB33 /* WidgetKit.framework */,
+				0FA504912D0906FA008EDB33 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		BC064B012CD2D7190082B7D9 = {
 			isa = PBXGroup;
 			children = (
 				BC064B0C2CD2D7190082B7D9 /* Groovify */,
 				BC064B222CD2D71E0082B7D9 /* GroovifyTests */,
 				BC064B2C2CD2D71E0082B7D9 /* GroovifyUITests */,
+				0FA504932D0906FA008EDB33 /* GroovifyWidget */,
+				0FA5048E2D0906FA008EDB33 /* Frameworks */,
 				BC064B0B2CD2D7190082B7D9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -168,6 +236,7 @@
 				BC064B0A2CD2D7190082B7D9 /* Groovify.app */,
 				BC064B1F2CD2D71E0082B7D9 /* GroovifyTests.xctest */,
 				BC064B292CD2D71E0082B7D9 /* GroovifyUITests.xctest */,
+				0FA5048D2D0906FA008EDB33 /* GroovifyWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -175,6 +244,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		0FA5048C2D0906FA008EDB33 /* GroovifyWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0FA504A12D0906FC008EDB33 /* Build configuration list for PBXNativeTarget "GroovifyWidgetExtension" */;
+			buildPhases = (
+				0FA504892D0906FA008EDB33 /* Sources */,
+				0FA5048A2D0906FA008EDB33 /* Frameworks */,
+				0FA5048B2D0906FA008EDB33 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				0FA504932D0906FA008EDB33 /* GroovifyWidget */,
+			);
+			name = GroovifyWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = GroovifyWidgetExtension;
+			productReference = 0FA5048D2D0906FA008EDB33 /* GroovifyWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		BC064B092CD2D7190082B7D9 /* Groovify */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = BC064B332CD2D71E0082B7D9 /* Build configuration list for PBXNativeTarget "Groovify" */;
@@ -182,10 +273,12 @@
 				BC064B062CD2D7190082B7D9 /* Sources */,
 				BC064B072CD2D7190082B7D9 /* Frameworks */,
 				BC064B082CD2D7190082B7D9 /* Resources */,
+				0FA5049E2D0906FC008EDB33 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				0FA5049C2D0906FC008EDB33 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				BC064B0C2CD2D7190082B7D9 /* Groovify */,
@@ -277,6 +370,9 @@
 				LastSwiftUpdateCheck = 1610;
 				LastUpgradeCheck = 1610;
 				TargetAttributes = {
+					0FA5048C2D0906FA008EDB33 = {
+						CreatedOnToolsVersion = 16.1;
+					};
 					BC064B092CD2D7190082B7D9 = {
 						CreatedOnToolsVersion = 16.1;
 					};
@@ -310,11 +406,19 @@
 				BC064B092CD2D7190082B7D9 /* Groovify */,
 				BC064B1E2CD2D71E0082B7D9 /* GroovifyTests */,
 				BC064B282CD2D71E0082B7D9 /* GroovifyUITests */,
+				0FA5048C2D0906FA008EDB33 /* GroovifyWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		0FA5048B2D0906FA008EDB33 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BC064B082CD2D7190082B7D9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -339,6 +443,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0FA504892D0906FA008EDB33 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BC064B062CD2D7190082B7D9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -363,6 +474,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		0FA5049C2D0906FC008EDB33 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0FA5048C2D0906FA008EDB33 /* GroovifyWidgetExtension */;
+			targetProxy = 0FA5049B2D0906FC008EDB33 /* PBXContainerItemProxy */;
+		};
 		BC064B212CD2D71E0082B7D9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BC064B092CD2D7190082B7D9 /* Groovify */;
@@ -376,6 +492,62 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		0FA5049F2D0906FC008EDB33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HB3XP4BKLJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GroovifyWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = GroovifyWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.DavidRomero.Groovify.GroovifyWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0FA504A02D0906FC008EDB33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HB3XP4BKLJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GroovifyWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = GroovifyWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.DavidRomero.Groovify.GroovifyWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		BC064B312CD2D71E0082B7D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -632,6 +804,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0FA504A12D0906FC008EDB33 /* Build configuration list for PBXNativeTarget "GroovifyWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0FA5049F2D0906FC008EDB33 /* Debug */,
+				0FA504A02D0906FC008EDB33 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		BC064B052CD2D7190082B7D9 /* Build configuration list for PBXProject "Groovify" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
